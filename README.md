@@ -90,6 +90,10 @@ The application will be available at: [http://localhost:3000](http://localhost:3
       ![order_products](public/guidePic/order_product.png)
       + custom_fields: CareSoft có các trường động, bạn phải nhập đúng ID và giá trị của từng trường. VD:
       ![custom_fields](public/guidePic/custom_field.png)
+      + comment: trường này sẽ được dùng khi tạo deals mới, có thể dùng để nhắn 1 hóa đơn lên. VD:
+      ![comment](public/guidePic/comment.png)
+      + Các trường comment.body, comment.is_public, comment.author_id: dùng khi cập nhật deal.
+
    - Sau khi cấu hình xong, nhấn "Lưu"
 
    ### Cơ Sở Dữ Liệu
