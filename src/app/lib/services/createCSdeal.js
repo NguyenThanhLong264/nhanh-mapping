@@ -28,8 +28,12 @@ export async function createCSdeal(dealData, body) {
     const appid = token.NhanhVN_AppId;
 
     if (orderId && dealId && businessId && appid) {
-      await saveOrderDealMapping(orderId.toString(), dealId.toString(), businessId.toString(), appid);
-      console.log(`createCSdeal - Saved mapping: order_id=${orderId}, deal_id=${dealId}, business_id=${businessId}, appid=${appid}`);
+      try {
+        await saveOrderDealMapping(orderId.toString(), dealId.toString(), businessId.toString(), appid);
+        console.log(`createCSdeal - Saved mapping: order_id=${orderId}, deal_id=${dealId}, business_id=${businessId}, appid=${appid}`);
+      } catch (dbError) {
+        console.warn('createCSdeal - Database save failed, continuing without mapping:', dbError.message);
+      }
     } else {
       console.error('createCSdeal - Missing fields for mapping:', { orderId, dealId, businessId, appid });
     }
