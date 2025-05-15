@@ -1,58 +1,43 @@
 # Nhanh.vn to CareSoft Integration
 
-## Overview
+## Tổng Quan
 
-A middleware application that seamlessly integrates Nhanh.vn orders with CareSoft deals. This application serves as a bridge between Nhanh.vn's e-commerce platform and CareSoft's CRM system, automatically converting orders into deals while maintaining data synchronization.
+Một ứng dụng trung gian giúp tích hợp liền mạch giữa các đơn hàng từ Nhanh.vn với các deal trong CareSoft CRM. Ứng dụng này đóng vai trò cầu nối giữa nền tảng thương mại điện tử Nhanh.vn và hệ thống quản lý khách hàng CareSoft, tự động chuyển đổi đơn hàng thành deal và đồng bộ dữ liệu theo thời gian thực.
 
-## Key Features
+## Tính Năng Chính
 
-- **Custom Field Mapping**: Flexible mapping configuration between Nhanh.vn and CareSoft fields
-- **Automated Deal Creation**: Automatic deal creation in CareSoft from Nhanh.vn orders
-- **Real-time Updates**: Synchronous order status updates between platforms
-- **Customer Management**: Automatic customer information updates based on phone numbers
-- **Configurable Settings**: Easy-to-use interface for API credentials and mapping setup
+- **Cấu hình mapping**: Mapping linh hoạt giữa các trường dữ liệu Nhanh.vn và CareSoft.
+- **Tự động tạo Deal**: Tự động tạo Deal khi nhận webhook từ đơn hàng Nhanh.vn vào CareSoft.
+- **Cập nhật thời gian thực**: Cập nhật thời gian thực các deals theo trạng thái đơn hàng thay đổi từ Nhanh.vn.
+- **Quản lý khách hàng**: Tự động tạo/cập nhật thông tin khách hàng dựa theo số điện thoại.
+- **Giao diện cấu hình dễ sử dụng**: Nhập thông tin API và cấu hình ánh xạ dễ dàng.
 
-## Prerequisites
+## Yêu Cầu Trước Khi Cài Đặt
 
 - Node.js (v18.20.8)
 - npm (v10.8.2)
-- Nhanh.vn API credentials (AppID, Version, BusinessID, AccessToken)
-- CareSoft API credentials (Domain, API Token)
+- Thông tin API của Nhanh.vn (AppID, Version, BusinessID, AccessToken, Webhooks verify token – phải khớp với app của bạn)
+- Thông tin API của CareSoft (Domain, API Token)
 
-## Installation
+## Cài Đặt
 
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/NguyenThanhLong264/nhanh-vn.git
+   git clone https://github.com/NguyenThanhLong264/nhanh-mapping.git
    ```
 
-2. Navigate to the project directory:
+2. Di chuyển vào thư mục dự án:
 
    ```bash
    cd nhanh-vn
    ```
 
-3. Install dependencies:
+3. Cài đặt thư viện:
 
    ```bash
    npm install
    ```
-
-## Configuration
-
-1. Set up your API credentials:
-
-   - Open the application in your browser
-   - Enter your Nhanh.vn credentials (AppID, Version, BusinessID, AccessToken)
-   - Enter your CareSoft credentials (Domain, API Token)
-   - Click "Save" to store your credentials
-
-2. Configure field mappings:
-   - Navigate to the mapping configuration page
-   - Map Nhanh.vn fields to CareSoft fields
-   - Set up custom field mappings as needed
-   - Save your configuration
 
 ## Running the Application
 
@@ -70,78 +55,58 @@ npm start
 
 The application will be available at: [http://localhost:3000](http://localhost:3000)
 
-## Webhook Setup
-
-For the integration to work, you need to set up webhooks in Nhanh.vn to notify this application when orders are created or updated:
-
-1. Configure webhooks in Nhanh.vn:
-   - Go to [https://open.nhanh.vn](https://open.nhanh.vn)
-   - Navigate to **My App > Choose the app > Edit the webhook**
-   - Create two webhooks with the following endpoints:
-     - `https://your-domain/api/webhookNhanhVN`
-
-Note: Replace `your-domain` with your actual domain name. Ensure your endpoint is accessible via HTTPS as required by Nhanh.vn's webhook system.
-
-## Database
-
-The application uses SQLite to store mappings between Nhanh.vn orders and CareSoft deals. The database is automatically created and managed by the application. This feature is use for update deals if it already exsit.
-
-## Troubleshooting
-
-- **Webhook not receiving data**: Ensure ngrok is running and the webhook URLs are correctly configured in Nhanh.vn
-- **API errors**: Verify your API credentials are correct in the application settings
-- **Mapping issues**: Check the field mappings in the configuration page
-
-## How to Use
+## Hướng Dẫn Sử Dụng
 
 1. **Initial Setup**
 
-   - Install and configure the application following the installation steps above
-   - Start the application using either development or production mode
-   - Access the application interface at `http://localhost:3000`
-   - **Ensure the application is accessible via HTTPS** (e.g., ngrok, localtunel, mkcert)
+   - Thực hiện các bước cài đặt như ở phần trên
+   - Khởi chạy ứng dụng bằng chế độ development hoặc production
+   - Truy cập giao diện tại `http://localhost:3000`
+   - **Đảm bảo ứng dụng có thể truy cập qua HTTPS** (ví dụ: ngrok, localtunel, hoặc cài chứng chỉ với mkcert)
 
-2. **API Configuration**
+2. **Cấu Hình API**
 
-   - In the application interface, navigate to the API settings page
-   - Enter your Nhanh.vn credentials:
+   - Nhập thông tin API:
       ![credentials](public/guidePic/credentials.png)
-   - Save your configuration
+   - Nhấn Lưu
 
-3. **Field Mapping Setup**
+3. **Cấu Hình Các Trường**
 
-   - Go to the mapping configuration page
-   - Map essential fields between Nhanh.vn and CareSoft:
-      + You can choose between map with params of NhanhVN webhook, or customize. When in the customize, you can still able to use the params of Nhanh by use: {{nhanh params}}. Example: "Đơn hàng của {{customerName}}" (with {{product}}, it auto changr to the list of product in order)
+   - Vào trang cấu hình (To Mapping)
+   - Thực hiện ánh xạ các trường quan trọng giữa Nhanh.vn và CareSoft:
+      + Bạn có thể chọn mapping với tham số từ webhook Nhanh.vn hoặc tùy chỉnh. 
+      + Khi tùy chỉnh, bạn vẫn có thể dùng tham số dạng {{tên}} như {{customerName}}, {{product}},…
+      + Ví dụ: "Đơn hàng của {{customerName}}" hoặc {{product}} sẽ tự động hiển thị danh sách sản phẩm
       ![mapping](public/guidePic/mapping1.png)
-   - Some special case:
-      + pipeline_stage_id: with each id of the pipeline_stage_id, you can map it with 1 status on nhanh, and if the status recive that not mapped, it use the default of that pipeline_id.
+   - Một số trường đặc biệt::
+      + pipeline_stage_id: Với mỗi pipeline stage trong CareSoft, bạn có thể ánh xạ tương ứng với một trạng thái đơn hàng bên Nhanh. Nếu không khớp, sẽ dùng pipeline mặc định.
       ![pipeline](public/guidePic/pipeline.png)
-      + order_status: in CareSoft we have different status, you can choose the status of nhanh to map with it.
+      + order_status: Trạng thái đơn hàng của CareSoft có thể ánh xạ tương ứng với trạng thái Nhanh.vn.
       ![order_status](public/guidePic/order_status.png)
-      + order_products: in CareSoft we have the order_products array with it parrams, and you can choose to map with the params of product of NhanhVN. But you need to have the products both CareSoft and Nhanh have there SKU = id (then it can display on deals, if not then turn the switch to: "Sản phẩm chưa nhập trên CareSoft")
+      + order_products: 
+         - CareSoft có mảng order_products và bạn có thể ánh xạ từ dữ liệu sản phẩm trong Nhanh.vn. 
+         - Điều kiện: sản phẩm bên CareSoft và Nhanh phải cùng có SKU = id
+         - Nếu không có sản phẩm sẵn trong CareSoft, hãy chuyển công tắc “Sản phẩm chưa nhập trên CareSoft”
       ![order_products](public/guidePic/order_product.png)
-      + custom_fields: CareSoft have the customs fields, you need to use the correct id and value of it. Example:
+      + custom_fields: CareSoft có các trường động, bạn phải nhập đúng ID và giá trị của từng trường. VD:
       ![custom_fields](public/guidePic/custom_field.png)
-   - Save your mapping configuration
+   - Sau khi cấu hình xong, nhấn "Lưu"
 
-4. **Webhook Configuration**
+   ### Cơ Sở Dữ Liệu
+   Ứng dụng sử dụng SQLite để lưu trữ thông tin ánh xạ giữa đơn hàng Nhanh.vn và Deal của CareSoft. Cơ sở dữ liệu được tạo và quản lý tự động. Tính năng này hỗ trợ cập nhật Deal nếu đơn hàng đã tồn tại.
+   
+4. **Cấu Hình Webhook**
 
-   - Access your Nhanh.vn account at [https://open.nhanh.vn](https://open.nhanh.vn)
-   - Navigate to Settings > Webhooks
-   - Add a new webhook with endpoint: `https://your-domain/api/webhookNhanhVN`
-   - Replace `your-domain` with your actual domain
-   - Ensure your endpoint is accessible via HTTPS
+   - Truy cập tài khoản Nhanh.vn tại [https://open.nhanh.vn](https://open.nhanh.vn)
+   - Vào phần Cài đặt > Webhook
+   - Thêm webhook với endpoint: `https://your-domain/api/webhookNhanhVN`
+   - Thay `your-domain` bằng domain thực tế của bạn
+   - Đảm bảo endpoint của bạn đang bật HTTPS
 
-5. **Testing the Integration**
+5. **Kiểm Tra Tích Hợp**
 
-   - Create a test order in Nhanh.vn
-   - Check your CareSoft account for the new deal
-   - Verify all mapped fields are correctly populated
-   - Test order status updates to ensure synchronization
+   - Tạo đơn hàng thử nghiệm trong Nhanh.vn
+   - Kiểm tra trong CareSoft xem đã tạo Deal hay chưa
+   - Kiểm tra các trường đã ánh xạ có đúng không
+   - Thử cập nhật trạng thái đơn hàng để kiểm tra đồng bộ
 
-6. **Monitoring and Maintenance**
-   - Regularly check the application logs for any errors
-   - Monitor webhook delivery status in Nhanh.vn
-   - Verify deal creation and updates in CareSoft
-   - Update field mappings as needed
