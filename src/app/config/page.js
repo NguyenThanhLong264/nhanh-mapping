@@ -16,21 +16,57 @@ export default function GGsheetMapPage() {
     const [rowsConfig, setRowsConfig] = useState([]);
     const [optionField, setOptionFields] = useState(webhookFields);
 
+    const saveConfig = async (configArray) => {
+        try {
+            const response = await fetch("/api/save-config", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(configArray),
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to save config to server");
+            }
+
+            const result = await response.json();
+            console.log("Server response:", result);
+            return true;
+        } catch (error) {
+            console.error("Error saving config to server:", error);
+            return false;
+        }
+    };
+
+    const fetchConfig = async () => {
+        try {
+            const res = await fetch('/api/save-config'); // thay bằng API thật
+            if (!res.ok) throw new Error(`Error: ${res.status}`);
+
+            const data = await res.json();
+            setRowsConfig(data);
+        } catch (err) {
+            console.error('Failed to load config:', err);
+        }
+    };
     // Load config từ localStorage hoặc defaultConfig
     useEffect(() => {
         const loadConfig = () => {
             try {
-                const savedConfig = localStorage.getItem("ggsheetConfig");
-                const savedSheetFields = localStorage.getItem("sheetFields");
+                const savedConfig = localStorage.getItem("config");
+                const savedSheetFields = localStorage.getItem("optionFields");
 
                 if (savedSheetFields) {
                     setOptionFields(JSON.parse(savedSheetFields));
+                } else {
+                    setOptionFields(webhookFields)
                 }
 
                 if (savedConfig) {
                     setRowsConfig(JSON.parse(savedConfig));
                 } else {
-                    setRowsConfig(defaultConfig);
+                    fetchConfig()
                 }
             } catch (error) {
                 console.error("Error loading config:", error);
@@ -71,7 +107,7 @@ export default function GGsheetMapPage() {
     // Lưu config vào localStorage
     const handleSave = async () => {
         try {
-            localStorage.setItem("ggsheetConfig", JSON.stringify(rowsConfig));
+            localStorage.setItem("config", JSON.stringify(rowsConfig));
 
             const success = await saveConfig(rowsConfig);
             if (success) {
@@ -88,7 +124,7 @@ export default function GGsheetMapPage() {
     return (
         <Box sx={{ width: "100%", bgcolor: "#F5F6FA" }}>
             <BackButton />
-            <CleanButton text="Default config" storageName={"ggsheetConfig"} value={defaultConfig} />
+            <CleanButton text="Default config" storageName={"config"} value={defaultConfig} />
             <Button
                 variant="contained"
                 color="primary"
@@ -123,7 +159,7 @@ export default function GGsheetMapPage() {
                     title="Order Product Fields"
                     rows={productRows}
                     onUpdateRow={handleUpdateRow}
-                    nhanhProductFields={optionField}
+                    nhanhProductFields={optionField.find(f => f.name === 'products')?.subFields || []}
                 />
 
                 <CustomFieldsTable
@@ -136,25 +172,4 @@ export default function GGsheetMapPage() {
     );
 }
 
-const saveConfig = async (configArray) => {
-    try {
-        const response = await fetch("/api/save-config", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(configArray),
-        });
 
-        if (!response.ok) {
-            throw new Error("Failed to save config to server");
-        }
-
-        const result = await response.json();
-        console.log("Server response:", result);
-        return true;
-    } catch (error) {
-        console.error("Error saving config to server:", error);
-        return false;
-    }
-};

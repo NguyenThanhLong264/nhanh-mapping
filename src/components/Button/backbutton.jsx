@@ -8,7 +8,7 @@ const BackButton = () => {
 
   return (
     <IconButton
-      onClick={() => router.push("/ggsheet")}
+      onClick={() => router.back()}
       sx={{
         position: "fixed",
         top: 16,

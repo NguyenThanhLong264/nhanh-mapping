@@ -44,7 +44,7 @@ const CustomFieldsTable = ({ rows, onUpdateRow, title }) => {
                 <TableBody>
                     {rows.map((row, rowIndex) => (
                         <React.Fragment key={rowIndex}>
-                            {(row.value || []).length === 0 ? (
+                            {(row.value).length === 0 ? (
                                 <TableRow>
                                     <TableCell>{row.name}</TableCell>
                                     <TableCell colSpan={3} align="center">
@@ -52,7 +52,7 @@ const CustomFieldsTable = ({ rows, onUpdateRow, title }) => {
                                     </TableCell>
                                 </TableRow>
                             ) : (
-                                (row.value || []).map((field, fieldIndex) => (
+                                (row.value).map((field, fieldIndex) => (
                                     <TableRow key={`${rowIndex}-${fieldIndex}`}>
                                         {fieldIndex === 0 && (
                                             <TableCell rowSpan={(row.value || []).length + 1}>
@@ -72,25 +72,15 @@ const CustomFieldsTable = ({ rows, onUpdateRow, title }) => {
                                             />
                                         </TableCell>
                                         <TableCell>
-                                            {/* <TextField
-                                                fullWidth
-                                                size="small"
-                                                value={field.value}
-                                                onChange={(e) =>
-                                                    handleCustomFieldChange(
-                                                        rowIndex,
-                                                        `${fieldIndex}.value`,
-                                                        e.target.value
-                                                    )
-                                                }
-                                            /> */}
                                             <CustomTextField value={field.value}
                                                 placeholder='Input Value'
-                                                onChange={(e) =>
+                                                onBlur={(newValue) =>
                                                     handleCustomFieldChange(
                                                         rowIndex,
                                                         `${fieldIndex}.value`,
-                                                        e.target.value)}
+                                                        newValue
+                                                    )
+                                                }
                                             />
                                         </TableCell>
                                         <TableCell>

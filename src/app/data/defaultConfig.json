@@ -18,6 +18,12 @@
         "value": ""
     },
     {
+        "name": "email",
+        "type": "email",
+        "typeInput": "normal",
+        "value": ""
+    },
+    {
         "name": "service_id",
         "type": "int",
         "typeInput": "normal",
@@ -63,7 +69,7 @@
         "name": "custom_fields",
         "type": "array",
         "typeInput": "custom",
-        "value": ""
+        "value": []
     },
     {
         "name": "probability",
