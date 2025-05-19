@@ -6,8 +6,7 @@ export async function handleOrderAdd(body) {
   console.log('Handling orderAdd');
   console.log('handleOrderAdd - body', body);
 
-  const dealData = await mapToDealFormat(body.data); // Xử lý dữ liệu
-  // Gửi dữ liệu đã xử lý tới API bên ngoài
+  const dealData = await mapToDealFormat(body.data);
   const response = await createCSdeal(dealData, body);
   return {
     status: response.status,

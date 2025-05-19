@@ -119,7 +119,7 @@
     "name": "comment.body",
     "type": "int",
     "typeInput": "map",
-    "value": "description"
+    "value": "reason"
   },
   {
     "name": "comment.is_public",

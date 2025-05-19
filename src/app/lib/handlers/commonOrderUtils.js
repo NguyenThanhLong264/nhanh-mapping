@@ -38,7 +38,7 @@ export async function mapToDealFormat(orderData) {
 
   product.forEach(obj => {
     const { name, typeInput, subFields } = obj;
-    deal[name] = orderData.products.map(product => {
+    deal[name] = (orderData.products || []).map(product => {
       const mappedProduct = {};
       subFields.forEach(field => {
         const { name: fieldName, typeInput: fieldType, value } = field;
@@ -56,12 +56,46 @@ export async function mapToDealFormat(orderData) {
     const { name, typeInput, value } = obj;
 
     if (Array.isArray(value)) {
-      deal[name] = value.map(item => ({
+      deal[name] = (value || []).map(item => ({
         ...item,
         value: replacePlaceholders(item.value, orderData)
       }));
     }
   });
+
+  const cleanedDeal = cleanEmptyValues(deal);
+  console.log("Final cleaned deal", cleanedDeal);
+  return cleanedDeal;
+}
+
+export async function mapToDealFormatForUpdate(orderData) {
+  const config = await loadConfig();
+  const useConfig = config.filter(item => {
+    const targetFields = ["businessId", "orderId", "shopOrderId", "status",
+      "statusDescription", "depotId", "reason",
+      "deliveryDate", "trackingUrl"];
+    return targetFields.some(field => item.value === field) ||
+      item.name.startsWith('comment.');
+  });
+
+  const deal = {};
+
+  useConfig.forEach(obj => {
+    const { name, value, typeInput } = obj;
+    if (typeInput === "normal") {
+      deal[name] = replacePlaceholders(value, orderData);
+    } else if (typeInput === "map") {
+      deal[name] = orderData[value];
+    }
+  });
+  deal.comment = {
+    body: deal["comment.body"] || "Order đã được cập nhật",
+    is_public: deal["comment.is_public"] || "0",
+    author_id: deal["comment.author_id"] || ""
+  }
+  delete deal["comment.body"];
+  delete deal["comment.is_public"];
+  delete deal["comment.author_id"];
 
   const cleanedDeal = cleanEmptyValues(deal);
   console.log("Final cleaned deal", cleanedDeal);
