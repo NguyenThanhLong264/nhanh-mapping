@@ -229,7 +229,6 @@ export default function ConfigPage() {
                 .filter(key => key.match(/^custom_fields\.id_(\d+)$/))
                 .map(key => parseInt(key.match(/^custom_fields\.id_(\d+)$/)[1]))
                 .sort((a, b) => a - b);
-
             const reorderedInputTypes = {};
 
             // Reorder the custom fields' input types
