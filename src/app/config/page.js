@@ -55,14 +55,6 @@ export default function GGsheetMapPage() {
         const loadConfig = () => {
             try {
                 const savedConfig = localStorage.getItem("config");
-                const savedSheetFields = localStorage.getItem("optionFields");
-
-                if (savedSheetFields) {
-                    setOptionFields(JSON.parse(savedSheetFields));
-                } else {
-                    setOptionFields(webhookFields)
-                }
-
                 if (savedConfig) {
                     setRowsConfig(JSON.parse(savedConfig));
                 } else {

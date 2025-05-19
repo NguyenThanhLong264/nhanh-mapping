@@ -63,7 +63,20 @@
     "name": "pipeline_stage_id",
     "type": "int",
     "typeInput": "pipeline_stage",
-    "value": []
+    "value": [
+      {
+        "id": "174",
+        "value": "New"
+      },
+      {
+        "id": "175",
+        "value": "Confirming"
+      },
+      {
+        "id": "178",
+        "value": "Success"
+      }
+    ]
   },
   {
     "name": "custom_fields",
