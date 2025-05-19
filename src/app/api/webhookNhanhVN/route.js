@@ -21,8 +21,7 @@ export async function POST(request) {
             return NextResponse.json({ message: 'Invalid webhooksVerifyToken' }, { status: 400 });
         }
 
-        await webhookDispatcher(event, body); // ✅ Bắt buộc await
-
+        await webhookDispatcher(event, body);
         return NextResponse.json({ message: 'Received successfully' }, { status: 200 });
     } catch (error) {
         console.error('Webhook - Error:', error.message);

@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { loadConfig } from '../../lib/services/webhookUtils';
 import fs from 'fs/promises';
 import path from 'path';
 
@@ -17,11 +18,9 @@ export async function POST(request) {
 }
 
 export async function GET() {
-  const configPath = path.join(process.cwd(), 'src', 'app', 'data', 'config.json');
   try {
-    const data = await fs.readFile(configPath, 'utf8');
-    const parsed = JSON.parse(data);
-    return NextResponse.json(parsed, { status: 200 });
+    const config = await loadConfig();
+    return NextResponse.json(config, { status: 200 });
   } catch (error) {
     console.log('Get array - No config found, returning empty array');
     return NextResponse.json([], { status: 200 });

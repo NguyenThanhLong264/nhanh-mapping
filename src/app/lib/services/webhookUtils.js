@@ -3,18 +3,26 @@ import path from 'path';
 
 export async function loadConfig() {
     const configPath = path.join(process.cwd(), 'src', 'app', 'data', 'config.json');
-    let config = { mapping: {}, inputTypes: {} };
     try {
         const configData = await fs.readFile(configPath, 'utf8');
-        config = JSON.parse(configData);
+        return JSON.parse(configData);
     } catch (error) {
-        console.log('Webhook - No config found, using default');
+        console.log('Webhook - No config found, returning empty array');
+        return [];
     }
-    return config;
 }
 
 export function replacePlaceholders(template, data) {
     if (typeof template !== 'string') return template;
+
+    // Xử lý đặc biệt cho products
+    if (template.includes('{{products}}') && data.products && Array.isArray(data.products)) {
+        const productsText = data.products.map(p => {
+            return `- ID: ${p.id} - SL: ${p.quantity} - Giá: ${p.price}đ - Discount: ${p.discount}VND - KL: ${p.weight}g`;
+        }).join('\n');
+        template = template.replace('{{products}}', productsText);
+    }
+
     return template.replace(/\{\{(\w+)\}\}/g, (match, param) => {
         const value = data[param];
         const safeValue = value !== undefined && value !== null ? value : match;
@@ -61,4 +69,20 @@ export function mapPipelineStageId(nhanhStatus, config) {
         console.log(`No pipeline_stage_id mapping found for Nhanh.vn status: ${nhanhStatus}, using default: ${mappedId}`);
     }
     return mappedId;
+}
+
+export function configClassify(config) {
+    const normal = config
+        .map((row, index) => ({ ...row, originalIndex: index }))
+        .filter((row) => row.typeInput === "normal" || row.typeInput === "map");
+    const special = config
+        .map((row, index) => ({ ...row, originalIndex: index }))
+        .filter((row) => row.typeInput === "pipeline_stage" || row.typeInput === "status");
+    const product = config
+        .map((row, index) => ({ ...row, originalIndex: index }))
+        .filter((row) => row.typeInput === "product");
+    const custom = config
+        .map((row, index) => ({ ...row, originalIndex: index }))
+        .filter((row) => row.typeInput === "custom");
+    return { normal, special, product, custom };
 }
