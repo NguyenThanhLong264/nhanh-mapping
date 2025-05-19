@@ -13,12 +13,11 @@ export async function handleOrderUpdate(body) {
   if (!dealId) {
     fetchOrderData = await fetchFullOrderData(data.orderId)
     console.log('handleOrderUpdate - fetchOrderData', fetchOrderData);
-
     const dealData = await mapToDealFormat(fetchOrderData);
     console.log('handleOrderUpdate - dealdata', dealData);
     response = await createCSdeal(dealData, body);
   } else {
-    console.log('handleOrderUpdate - else run');
+    console.log('handleOrderUpdate - update deal');
     response = await updateDeal(data, dealId)
   }
   console.log('Done Update');
