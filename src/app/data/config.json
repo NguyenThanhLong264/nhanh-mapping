@@ -1,123 +1,240 @@
-{
-    "mapping": {
-        "username": "customerName",
-        "subject": "Đơn hàng của {{customerName}}",
-        "phone": "customerMobile",
-        "email": "customerEmail",
-        "service_id": "95081114",
-        "group_id": "",
-        "assignee_id": "",
-        "pipeline_id": "24",
-        "estimated_closed_date": "deliveryDate",
-        "deal_label": [
-            97,
-            98
-        ],
-        "pipeline_stage_id": "",
-        "custom_fields": "",
-        "probability": "",
-        "value": "calcTotalMoney",
-        "comment": "Thông tin hoá đơn:\nNgười mua: {{customerName}} - {{customerMobile}}\nNgày mua hàng: {{createdDateTime}}\nTrạng thái: {{statusDescription}}\nMô tả: {{description}}\nDanh sách mặt hàng:\n{{products}}\nTổng tiền hàng: {{calcTotalMoney}}",
-        "comment.body": "{{orderId}}",
-        "comment.is_public": "0",
-        "comment.author_id": "",
-        "order_address_detail": "customerAddress",
-        "order_buyer_note": "description",
-        "order_city_id": "shipToCityLocationId",
-        "order_district_id": "shipToDistrictLocationId",
-        "order_ward_id": "shipToWardLocationId",
-        "order_receiver_name": "customerName",
-        "order_receiver_phone": "customerMobile",
-        "order_shipping_fee": "customerShipFee",
-        "order_status": "",
-        "order_tracking_code": "code tracking",
-        "order_tracking_url": "trackingUrl",
-        "order_products": "",
-        "custom_fields.id_1": "7561",
-        "custom_fields.value_1": "111779",
-        "custom_fields.id_2": "11217",
-        "custom_fields.value_2": "164858",
-        "custom_fields.id_3": "10659",
-        "custom_fields.value_3": "161640",
-        "custom_fields.id_4": "11454",
-        "custom_fields.value_4": "{{orderId}}",
-        "order_products.unit_price": "price",
-        "order_products.quantity": "quantity",
-        "order_products.discount_value": "",
-        "order_status.ORDER_STARTED": "New",
-        "order_status.BUYER_CONFIRMED": "CustomerConfirming",
-        "order_status.SELLER_CONFIRMED": "Confirmed",
-        "order_status.SHIPPING": "Shipping",
-        "order_status.RETURNED": "Returning",
-        "order_status.CANCELED": "Canceled",
-        "order_status.RECEIVED": "Pickup",
-        "order_status.COMPLETED": "Success",
-        "pipeline_stage_id.New": "174",
-        "pipeline_stage_id.Confirming": "175",
-        "pipeline_stage_id.CustomerConfirming": "604",
-        "pipeline_stage_id.Shipping": "408",
-        "pipeline_stage_id.Success": "178",
-        "order_products.sku": "id",
-        "order_products.discount_markup": "discount",
-        "pipeline_stage_id.Confirmed": "175"
-    },
-    "inputTypes": {
-        "username": "map",
-        "subject": "custom",
-        "phone": "map",
-        "email": "map",
-        "service_id": "custom",
-        "group_id": "map",
-        "assignee_id": "map",
-        "pipeline_id": "custom",
-        "estimated_closed_date": "map",
-        "deal_label": "custom",
-        "pipeline_stage_id": "map",
-        "custom_fields": "map",
-        "probability": "map",
-        "value": "map",
-        "comment": "custom",
-        "comment.body": "custom",
-        "comment.is_public": "custom",
-        "comment.author_id": "map",
-        "order_address_detail": "map",
-        "order_buyer_note": "map",
-        "order_city_id": "map",
-        "order_district_id": "map",
-        "order_ward_id": "map",
-        "order_receiver_name": "map",
-        "order_receiver_phone": "map",
-        "order_shipping_fee": "map",
-        "order_status": "map",
-        "order_tracking_code": "custom",
-        "order_tracking_url": "map",
-        "order_products": "map",
-        "custom_fields.id_1": "custom",
-        "custom_fields.value_1": "custom",
-        "custom_fields.id_2": "custom",
-        "custom_fields.value_2": "custom",
-        "custom_fields.id_3": "custom",
-        "custom_fields.value_3": "custom",
-        "custom_fields.id_4": "custom",
-        "custom_fields.value_4": "custom",
-        "order_products.unit_price": "map",
-        "order_products.quantity": "map",
-        "order_products.discount_value": "custom",
-        "order_status.ORDER_STARTED": "map",
-        "order_status.BUYER_CONFIRMED": "map",
-        "order_status.SELLER_CONFIRMED": "map",
-        "order_status.SHIPPING": "map",
-        "order_status.RETURNED": "map",
-        "order_status.CANCELED": "map",
-        "order_status.RECEIVED": "map",
-        "order_status.COMPLETED": "map",
-        "pipeline_stage_id.New": "map",
-        "pipeline_stage_id.Confirming": "map",
-        "pipeline_stage_id.CustomerConfirming": "map",
-        "pipeline_stage_id.Shipping": "map",
-        "pipeline_stage_id.Success": "map",
-        "order_products.sku": "map",
-        "order_products.discount_markup": "map",
-        "pipeline_stage_id.Confirmed": "map"
-    }
-}
+[
+  {
+    "name": "username",
+    "type": "int",
+    "typeInput": "normal",
+    "value": "dsds"
+  },
+  {
+    "name": "subject",
+    "type": "int",
+    "typeInput": "normal",
+    "value": "dsdsd"
+  },
+  {
+    "name": "phone",
+    "type": "int",
+    "typeInput": "normal",
+    "value": ""
+  },
+  {
+    "name": "service_id",
+    "type": "int",
+    "typeInput": "normal",
+    "value": ""
+  },
+  {
+    "name": "group_id",
+    "type": "int",
+    "typeInput": "normal",
+    "value": ""
+  },
+  {
+    "name": "assignee_id",
+    "type": "int",
+    "typeInput": "normal",
+    "value": ""
+  },
+  {
+    "name": "pipeline_id",
+    "type": "int",
+    "typeInput": "normal",
+    "value": ""
+  },
+  {
+    "name": "estimated_closed_date",
+    "type": "int",
+    "typeInput": "normal",
+    "value": ""
+  },
+  {
+    "name": "deal_label",
+    "type": "int",
+    "typeInput": "normal",
+    "value": ""
+  },
+  {
+    "name": "pipeline_stage_id",
+    "type": "int",
+    "typeInput": "pipeline_stage",
+    "value": []
+  },
+  {
+    "name": "custom_fields",
+    "type": "array",
+    "typeInput": "custom",
+    "value": ""
+  },
+  {
+    "name": "probability",
+    "type": "int",
+    "typeInput": "normal",
+    "value": ""
+  },
+  {
+    "name": "value",
+    "type": "int",
+    "typeInput": "normal",
+    "value": ""
+  },
+  {
+    "name": "comment",
+    "type": "int",
+    "typeInput": "normal",
+    "value": ""
+  },
+  {
+    "name": "comment.body",
+    "type": "int",
+    "typeInput": "normal",
+    "value": ""
+  },
+  {
+    "name": "comment.is_public",
+    "type": "int",
+    "typeInput": "normal",
+    "value": ""
+  },
+  {
+    "name": "comment.author_id",
+    "type": "int",
+    "typeInput": "normal",
+    "value": ""
+  },
+  {
+    "name": "order_address_detail",
+    "type": "int",
+    "typeInput": "normal",
+    "value": ""
+  },
+  {
+    "name": "order_buyer_note",
+    "type": "int",
+    "typeInput": "normal",
+    "value": ""
+  },
+  {
+    "name": "order_city_id",
+    "type": "int",
+    "typeInput": "normal",
+    "value": ""
+  },
+  {
+    "name": "order_district_id",
+    "type": "int",
+    "typeInput": "normal",
+    "value": ""
+  },
+  {
+    "name": "order_ward_id",
+    "type": "int",
+    "typeInput": "normal",
+    "value": ""
+  },
+  {
+    "name": "order_receiver_name",
+    "type": "int",
+    "typeInput": "normal",
+    "value": ""
+  },
+  {
+    "name": "order_receiver_phone",
+    "type": "int",
+    "typeInput": "normal",
+    "value": ""
+  },
+  {
+    "name": "order_status",
+    "type": "int",
+    "typeInput": "status",
+    "value": [
+      {
+        "status": "ORDER_STARTED",
+        "value": ""
+      },
+      {
+        "status": "BUYER_CONFIRMED",
+        "value": ""
+      },
+      {
+        "status": "SELLER_CONFIRMED",
+        "value": ""
+      },
+      {
+        "status": "SHIPPING",
+        "value": ""
+      },
+      {
+        "status": "RETURNED",
+        "value": ""
+      },
+      {
+        "status": "CANCELED",
+        "value": ""
+      },
+      {
+        "status": "RECEIVED",
+        "value": ""
+      },
+      {
+        "status": "COMPLETED",
+        "value": ""
+      }
+    ]
+  },
+  {
+    "name": "order_tracking_code",
+    "type": "int",
+    "typeInput": "normal",
+    "value": ""
+  },
+  {
+    "name": "order_tracking_url",
+    "type": "int",
+    "typeInput": "normal",
+    "value": ""
+  },
+  {
+    "name": "order_products",
+    "type": "int",
+    "typeInput": "product",
+    "value": "",
+    "subFields": [
+      {
+        "name": "sku",
+        "type": "string",
+        "typeInput": "normal",
+        "value": ""
+      },
+      {
+        "name": "is_free",
+        "type": "int",
+        "typeInput": "normal"
+      },
+      {
+        "name": "unit_price",
+        "type": "float",
+        "typeInput": "normal",
+        "value": ""
+      },
+      {
+        "name": "quantity",
+        "type": "int",
+        "typeInput": "normal",
+        "value": ""
+      },
+      {
+        "name": "discount_markup",
+        "type": "float",
+        "typeInput": "normal",
+        "value": ""
+      },
+      {
+        "name": "discount_value",
+        "type": "float",
+        "typeInput": "normal",
+        "value": ""
+      }
+    ]
+  }
+]

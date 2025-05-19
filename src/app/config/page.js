@@ -69,10 +69,16 @@ export default function GGsheetMapPage() {
     };
 
     // Lưu config vào localStorage
-    const handleSave = () => {
+    const handleSave = async () => {
         try {
             localStorage.setItem("ggsheetConfig", JSON.stringify(rowsConfig));
-            alert("Configuration saved successfully to localStorage!");
+
+            const success = await saveConfig(rowsConfig);
+            if (success) {
+                alert("Configuration saved to localStorage and server successfully!");
+            } else {
+                alert("Saved to localStorage, but failed to save to server.");
+            }
         } catch (error) {
             console.error("Error saving config:", error);
             alert("Failed to save configuration");
@@ -82,11 +88,7 @@ export default function GGsheetMapPage() {
     return (
         <Box sx={{ width: "100%", bgcolor: "#F5F6FA" }}>
             <BackButton />
-            <CleanButton
-                text="Default config"
-                storageName={"ggsheetConfig"}
-                value={defaultConfig}
-            />
+            <CleanButton text="Default config" storageName={"ggsheetConfig"} value={defaultConfig} />
             <Button
                 variant="contained"
                 color="primary"
@@ -133,3 +135,26 @@ export default function GGsheetMapPage() {
         </Box>
     );
 }
+
+const saveConfig = async (configArray) => {
+    try {
+        const response = await fetch("/api/save-config", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(configArray),
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to save config to server");
+        }
+
+        const result = await response.json();
+        console.log("Server response:", result);
+        return true;
+    } catch (error) {
+        console.error("Error saving config to server:", error);
+        return false;
+    }
+};
