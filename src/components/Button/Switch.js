@@ -12,12 +12,10 @@ const CustomizeSwitch = ({ checked, onChange, label }) => {
         }}>
             <FormControlLabel
                 control={
-                    <Box>
-                        <CustomSwitchLayout
-                            checked={checked}
-                            onChange={onChange}
-                        />
-                    </Box>
+                    <CustomSwitchLayout
+                        checked={checked}
+                        onChange={onChange}
+                    />
                 }
                 label={label ?? defaultLabel}
                 sx={{ m: 0, '& .MuiTypography-root': { ml: '8px' } }}

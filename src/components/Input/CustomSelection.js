@@ -1,7 +1,7 @@
 import React from 'react'
 import { Autocomplete, TextField } from '@mui/material'
 
-const CustomSelection = ({ value, onChange, option, webhookFields }) => {
+const CustomSelection = ({ value, onChange, option }) => {
     return (
         <>
             <Autocomplete
@@ -9,10 +9,14 @@ const CustomSelection = ({ value, onChange, option, webhookFields }) => {
                 options={option}
                 value={value}
                 onChange={onChange}
+                getOptionLabel={(option) => {
+                    if (option === null || option === undefined) return '';
+                    return String(option);
+                }}
                 sx={{
                     width: "100%",
                     "& .MuiOutlinedInput-root": {
-                        borderRadius: "12px", // ✅ Rounded border
+                        borderRadius: "12px",
                         p: "12px 8px 12px 16px",
                         display: "flex",
                         height: "40px",
