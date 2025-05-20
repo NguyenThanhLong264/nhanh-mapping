@@ -18,7 +18,7 @@ export function replacePlaceholders(template, data) {
     // Xử lý đặc biệt cho products
     if (template.includes('{{products}}') && data.products && Array.isArray(data.products)) {
         const productsText = data.products.map(p => {
-            return `- ID: ${p.id} - SL: ${p.quantity} - Giá: ${p.price}đ - Discount: ${p.discount}VND - KL: ${p.weight}g`;
+            return `- ID Nhanh: ${p.id} - SL: ${p.quantity} - KL: ${p.weight}g - Discount: ${p.discount}VND  - Giá: ${p.price}VND`;
         }).join('\n');
         template = template.replace('{{products}}', productsText);
     }
