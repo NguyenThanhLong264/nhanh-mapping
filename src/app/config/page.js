@@ -11,6 +11,7 @@ import CleanButton from "@/components/Button/cleanbutton";
 import GuideButton from "@/components/Button/guidebutton";
 import { GUIDE_TEXT } from "@/app/constants/guideText";
 import { webhookFields } from "@/app/constants/nhanhWebhookFields"
+import SaveButton from "@/components/Button/savebutton";
 
 export default function GGsheetMapPage() {
     const [rowsConfig, setRowsConfig] = useState([]);
@@ -117,20 +118,7 @@ export default function GGsheetMapPage() {
         <Box sx={{ width: "100%", bgcolor: "#F5F6FA" }}>
             <BackButton />
             <CleanButton text="Default config" storageName={"config"} value={defaultConfig} />
-            <Button
-                variant="contained"
-                color="primary"
-                onClick={handleSave}
-                sx={{
-                    position: "fixed",
-                    top: 20,
-                    right: 20,
-                    zIndex: 1000,
-                    width: 150,
-                }}
-            >
-                Save Config
-            </Button>
+            <SaveButton onClick={handleSave} />
             <GuideButton tooltipText={GUIDE_TEXT} />
 
             <Box sx={{ p: 3, maxWidth: "1200px", mx: "auto", bgcolor: "#F5F6FA" }}>

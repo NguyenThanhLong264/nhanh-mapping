@@ -1,5 +1,5 @@
 'use client';
-import ConditionForm from "../components/ConditionForm";
+import ConditionForm from "../components/Form/ConditionForm";
 import styles from "./styles.module.css";
 import { useRouter } from 'next/navigation';
 
