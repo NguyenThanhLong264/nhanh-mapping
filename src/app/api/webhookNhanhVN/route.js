@@ -8,9 +8,11 @@ export async function POST(request) {
     let token;
     if (process.env.DB_TYPE === 'mysql') {
         token = await getConditionByName("config")
+
     } else if (process.env.DB_TYPE === 'sqlite') {
         token = condition.token;
     }
+    console.log("token: ", token);
 
     try {
         const body = await request.json();
