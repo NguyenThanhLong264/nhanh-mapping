@@ -19,7 +19,7 @@ export default function GGsheetMapPage() {
 
     const saveConfig = async (configArray) => {
         try {
-            const response = await fetch("/api/save-config", {
+            const response = await fetch("/api/config/save", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -42,10 +42,10 @@ export default function GGsheetMapPage() {
 
     const fetchConfig = async () => {
         try {
-            const res = await fetch('/api/save-config'); // thay bằng API thật
-            if (!res.ok) throw new Error(`Error: ${res.status}`);
-
+            const res = await fetch('/api/config/load?name=config');
             const data = await res.json();
+            if (!res.ok) throw new Error(`Error: ${data.error}`);
+            console.log("Loaded config UI:", data);
             setRowsConfig(data);
         } catch (err) {
             console.error('Failed to load config:', err);
@@ -55,12 +55,7 @@ export default function GGsheetMapPage() {
     useEffect(() => {
         const loadConfig = () => {
             try {
-                const savedConfig = localStorage.getItem("config");
-                if (savedConfig) {
-                    setRowsConfig(JSON.parse(savedConfig));
-                } else {
-                    fetchConfig()
-                }
+                fetchConfig()
             } catch (error) {
                 console.error("Error loading config:", error);
                 setRowsConfig(defaultConfig);
@@ -100,8 +95,7 @@ export default function GGsheetMapPage() {
     // Lưu config vào localStorage
     const handleSave = async () => {
         try {
-            localStorage.setItem("config", JSON.stringify(rowsConfig));
-
+            // localStorage.setItem("config", JSON.stringify(rowsConfig));
             const success = await saveConfig(rowsConfig);
             if (success) {
                 alert("Configuration saved to localStorage and server successfully!");

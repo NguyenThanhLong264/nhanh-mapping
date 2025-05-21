@@ -1,4 +1,4 @@
-import { saveCondition, getConditionByName } from '@/app/lib/db';
+import { saveCondition } from '@/app/lib/db';
 import { error } from 'console';
 import fs from 'fs';
 import path from 'path';

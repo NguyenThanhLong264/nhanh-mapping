@@ -15,8 +15,8 @@ export async function GET(request) {
             return Response.json(value);
         } else {
             // SQLite - lấy từ file json
-            const value = conditions.token[name];
-            return Response.json({ value });
+            const value = conditions.token;
+            return Response.json(value);
         }
     } catch (error) {
         console.error('Error getting condition:', error);

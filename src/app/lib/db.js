@@ -25,7 +25,7 @@ async function getDb() {
                 )
             `);
             await dbInstance.execute(`
-                CREATE TABLE IF NOT EXISTS test1 (
+                CREATE TABLE IF NOT EXISTS config (
                 name VARCHAR(255) NOT NULL PRIMARY KEY,
                 value JSON NOT NULL
                 );
@@ -109,7 +109,7 @@ export async function saveCondition(name, value) {
     const db = await getDb();
     try {
         await db.execute(
-            `INSERT INTO test1 (name, value) 
+            `INSERT INTO config (name, value) 
             VALUES (?, ?) 
             ON DUPLICATE KEY UPDATE value = VALUES(value)`,
             [name, value]
@@ -129,9 +129,10 @@ export async function getConditionByName(name) {
     const db = await getDb();
     try {
         const [rows] = await db.execute(
-            'SELECT value FROM test1 WHERE name = ?',
+            'SELECT value FROM config WHERE name = ?',
             [name]
         );
+        console.log(`DB - Loaded condition: name=${name}`, rows[0].value);
         return rows[0] ? rows[0].value : null;
     } catch (error) {
         console.error('DB - Error getting condition:', error);
