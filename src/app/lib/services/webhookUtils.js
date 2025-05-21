@@ -2,13 +2,18 @@ import fs from 'fs/promises';
 import path from 'path';
 
 export async function loadConfig() {
-    const configPath = path.join(process.cwd(), 'src', 'app', 'data', 'config.json');
-    try {
-        const configData = await fs.readFile(configPath, 'utf8');
-        return JSON.parse(configData);
-    } catch (error) {
-        console.log('Webhook - No config found, returning empty array');
-        return [];
+    if (process.env.DB_TYPE === 'mysql') {
+        return await getConditionByName("config")
+    }
+    else if (process.env.DB_TYPE === 'sqlite') {
+        const configPath = path.join(process.cwd(), 'src', 'app', 'data', 'config.json');
+        try {
+            const configData = await fs.readFile(configPath, 'utf8');
+            return JSON.parse(configData);
+        } catch (error) {
+            console.log('Webhook - No config found, returning empty array');
+            return [];
+        }
     }
 }
 
