@@ -24,6 +24,12 @@ async function getDb() {
                     appid VARCHAR(255) NOT NULL
                 )
             `);
+            await dbInstance.execute(`
+                CREATE TABLE IF NOT EXISTS test1 (
+                name VARCHAR(255) NOT NULL PRIMARY KEY,
+                value JSON NOT NULL
+                );
+            `);
         } else {
             // SQLite (mặc định)
             dbInstance = await open({
@@ -99,18 +105,22 @@ export async function saveOrderDealMapping(orderId, dealId, businessId, appId) {
     }
 }
 
-export async function saveCondition(name, jsonValue) {
+export async function saveCondition(name, value) {
     const db = await getDb();
     try {
-        await db.execute(
-            'INSERT INTO conditions (name, value) VALUES (?, ?) ' +
-            'ON DUPLICATE KEY UPDATE value = VALUES(value)',
-            [name, JSON.stringify(jsonValue)]
+        const [result] = await db.execute(
+            `INSERT INTO test1 (name, value) 
+            VALUES (?, ?) 
+            ON DUPLICATE KEY UPDATE value = VALUES(value)`,
+            [name, value]
         );
-        console.log(`DB - Saved condition: name=${name}`);
+        console.log(`DB - Saved condition: name=${name} `, value, result);
         return true;
     } catch (error) {
         console.error('DB - Error saving condition:', error);
+        console.error('SQL State:', error.sqlState);
+        console.error('Error Code:', error.errno);
+        console.error('SQL Message:', error.sqlMessage);
         return false;
     }
 }
@@ -119,7 +129,7 @@ export async function getConditionByName(name) {
     const db = await getDb();
     try {
         const [rows] = await db.execute(
-            'SELECT value FROM conditions WHERE name = ?',
+            'SELECT value FROM test1 WHERE name = ?',
             [name]
         );
         return rows[0] ? rows[0].value : null;
@@ -128,3 +138,5 @@ export async function getConditionByName(name) {
         return null;
     }
 }
+
+

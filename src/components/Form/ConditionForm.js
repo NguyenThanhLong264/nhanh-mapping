@@ -42,7 +42,6 @@ const ConditionForm = () => {
     const handleSave = async () => {
         setValues(tempValues);
         setEditMode(false);
-
         // Save updated data to conditions API
         await fetch('/api/conditions/update', {
             method: 'POST',

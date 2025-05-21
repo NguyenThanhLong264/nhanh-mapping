@@ -11,6 +11,7 @@ export async function GET(request) {
             if (!value) {
                 return Response.json(conditions.token);
             }
+            console.log("Get Value:", value);
             return Response.json(value);
         } else {
             // SQLite - lấy từ file json
