@@ -12,8 +12,22 @@ const ConditionForm = () => {
 
     // // Load initial data from the JSON file
     useEffect(() => {
-        setValues(conditions.token);
+        async function fetchConfig() {
+            try {
+                const res = await fetch('/api/conditions/get?name=apiKey');
+                const data = await res.json();
+                if (!res.ok) {
+                    console.warn('Config not found:', data.error);
+                    return;
+                }
+                setValues(data);
+            } catch (err) {
+                console.error('Error fetching config:', err);
+            }
+        }
+        fetchConfig();
     }, []);
+
 
     const handleEdit = () => {
         setTempValues({ ...values });
@@ -29,13 +43,13 @@ const ConditionForm = () => {
         setValues(tempValues);
         setEditMode(false);
 
-        // Save updated data to backend API or local server endpoint
-        await fetch('/api/editable-box', {
+        // Save updated data to conditions API
+        await fetch('/api/conditions/update', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ token: tempValues })
+            body: JSON.stringify(tempValues)
         });
     };
 

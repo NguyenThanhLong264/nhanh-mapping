@@ -98,3 +98,33 @@ export async function saveOrderDealMapping(orderId, dealId, businessId, appId) {
         }
     }
 }
+
+export async function saveCondition(name, jsonValue) {
+    const db = await getDb();
+    try {
+        await db.execute(
+            'INSERT INTO conditions (name, value) VALUES (?, ?) ' +
+            'ON DUPLICATE KEY UPDATE value = VALUES(value)',
+            [name, JSON.stringify(jsonValue)]
+        );
+        console.log(`DB - Saved condition: name=${name}`);
+        return true;
+    } catch (error) {
+        console.error('DB - Error saving condition:', error);
+        return false;
+    }
+}
+
+export async function getConditionByName(name) {
+    const db = await getDb();
+    try {
+        const [rows] = await db.execute(
+            'SELECT value FROM conditions WHERE name = ?',
+            [name]
+        );
+        return rows[0] ? rows[0].value : null;
+    } catch (error) {
+        console.error('DB - Error getting condition:', error);
+        return null;
+    }
+}
