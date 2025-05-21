@@ -108,13 +108,13 @@ export async function saveOrderDealMapping(orderId, dealId, businessId, appId) {
 export async function saveCondition(name, value) {
     const db = await getDb();
     try {
-        const [result] = await db.execute(
+        await db.execute(
             `INSERT INTO test1 (name, value) 
             VALUES (?, ?) 
             ON DUPLICATE KEY UPDATE value = VALUES(value)`,
             [name, value]
         );
-        console.log(`DB - Saved condition: name=${name} `, value, result);
+        // console.log(`DB - Saved condition: name=${name} `, value, result);
         return true;
     } catch (error) {
         console.error('DB - Error saving condition:', error);
