@@ -2,6 +2,7 @@
 import axios from 'axios';
 import condition from '../../data/condition.json';
 import { mapToDealFormatForUpdate } from '../handlers/commonOrderUtils';
+import { getConditionByName } from '../db';
 
 export async function updateDeal(data, dealId) {
     let token;

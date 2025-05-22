@@ -2,6 +2,7 @@
 import axios from 'axios';
 import FormData from 'form-data';
 import condition from '../../data/condition.json';
+import { getConditionByName } from '../db';
 
 export async function fetchFullOrderData(orderId) {
     let token;

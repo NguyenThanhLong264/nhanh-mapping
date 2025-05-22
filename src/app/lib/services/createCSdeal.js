@@ -2,6 +2,7 @@ import axios from 'axios';
 import { saveOrderDealMapping } from '../db';
 import condition from '../../data/condition.json'
 import { isCustomerExsit } from '../handlers/customerProccessing';
+import { getConditionByName } from '../db';
 
 export async function createCSdeal(dealData, body) {
   let token;
@@ -33,10 +34,20 @@ export async function createCSdeal(dealData, body) {
 
     const dealId = web2Response.data.deal?.id;
     const appid = token.NhanhVN_AppId;
-    
+
     if (dealData.phone) {
-      isCustomerExsit(dealData.phone)
+      const customerExists = await isCustomerExsit(dealData);
+      if (customerExists === true) {
+        console.log('Customer exists, updated');
+      } else if (customerExists === false) {
+        console.log('Customer does not exist');
+      } else {
+        console.error('Error checking customer:', customerExists);
+      }
+    } else {
+      console.log("There no phone:", dealData.phone);
     }
+
     if (orderId && dealId && businessId && appid) {
       try {
         await saveOrderDealMapping(orderId.toString(), dealId.toString(), businessId.toString(), appid);

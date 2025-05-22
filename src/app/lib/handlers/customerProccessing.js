@@ -9,7 +9,8 @@ if (process.env.DB_TYPE === 'mysql') {
     token = condition.token;
 }
 
-export async function isCustomerExsit(customerPhone) {
+export async function isCustomerExsit(deal) {
+    const customerPhone = deal.phone;
     try {
         const axiosConfig = {
             method: 'get',
@@ -25,11 +26,11 @@ export async function isCustomerExsit(customerPhone) {
 
         if (data.code === "ok" && data.contact) {
             const contact = data.contact;
-            updateCustomer(contact, contact.id)
+            await updateCustomer(deal, contact.id);  // Added await here
             return true;
         } else if (data.code === "errors" && data.message === "Not found user, creating") {
             const contact = data.contact;
-            createCustomer(contact)
+            await createCustomer(contact);  // Added await here
             return false;
         } else {
             return {
@@ -52,9 +53,11 @@ export async function isCustomerExsit(customerPhone) {
 
 export async function updateCustomer(contact, id) {
     try {
+        console.log(`Updating customer with ID: ${id}`);
+        console.log('Customer data:', contact);
+
         const data = JSON.stringify({
             contact: {
-                phone_no: contact.phone,
                 username: contact.username
             }
         });
@@ -70,7 +73,10 @@ export async function updateCustomer(contact, id) {
             data: data
         };
 
+        console.log('Sending update request...');
         const response = await axios.request(config);
+        console.log('Update successful:', response.data);
+
         return {
             status: 200,
             data: response.data
@@ -88,9 +94,12 @@ export async function updateCustomer(contact, id) {
 
 export async function createCustomer(contact) {
     try {
+        console.log('Creating new customer');
+        console.log('Customer data:', contact);
+
         const data = JSON.stringify({
             contact: {
-                phone_no: contact.phone,
+                phone_no: contact.phone_no,
                 username: contact.username
             }
         });
@@ -106,7 +115,10 @@ export async function createCustomer(contact) {
             data: data
         };
 
+        console.log('Sending create request...');
         const response = await axios.request(config);
+        console.log('Create successful:', response.data);
+
         return {
             status: 200,
             data: response.data
