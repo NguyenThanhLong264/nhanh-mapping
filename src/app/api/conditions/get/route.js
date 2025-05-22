@@ -1,23 +1,24 @@
 import { getConditionByName } from '@/app/lib/db';
 import conditions from '@/app/data/condition.json';
+import maskSensitiveFields from '@/app/lib/handlers/maskedToken';
 
 export async function GET(request) {
     try {
         const { searchParams } = new URL(request.url);
         const name = searchParams.get('name');
+        let value
 
         if (process.env.DB_TYPE === 'mysql') {
-            const value = await getConditionByName(name);
+            value = await getConditionByName(name);
             if (!value) {
-                return Response.json(conditions.token);
+                value = conditions.token;
             }
             // console.log("Get Value:", value);
-            return Response.json(value);
         } else {
             // SQLite - lấy từ file json
-            const value = conditions.token;
-            return Response.json(value);
+            value = conditions.token;
         }
+        return Response.json(maskSensitiveFields(value))
     } catch (error) {
         console.error('Error getting condition:', error);
         return Response.json(
