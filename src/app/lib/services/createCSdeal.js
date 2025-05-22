@@ -1,9 +1,16 @@
 import axios from 'axios';
 import { saveOrderDealMapping } from '../db';
 import condition from '../../data/condition.json'
+import { isCustomerExsit } from '../handlers/customerProccessing';
 
 export async function createCSdeal(dealData, body) {
-  const token = condition.token;
+  let token;
+  if (process.env.DB_TYPE === 'mysql') {
+    token = await getConditionByName("apiKey")
+
+  } else if (process.env.DB_TYPE === 'sqlite') {
+    token = condition.token;
+  }
   const data = body.data
   const orderId = data.orderId
   const businessId = body.businessId
@@ -26,7 +33,10 @@ export async function createCSdeal(dealData, body) {
 
     const dealId = web2Response.data.deal?.id;
     const appid = token.NhanhVN_AppId;
-
+    
+    if (dealData.phone) {
+      isCustomerExsit(dealData.phone)
+    }
     if (orderId && dealId && businessId && appid) {
       try {
         await saveOrderDealMapping(orderId.toString(), dealId.toString(), businessId.toString(), appid);

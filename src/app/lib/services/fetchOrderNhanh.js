@@ -4,8 +4,15 @@ import FormData from 'form-data';
 import condition from '../../data/condition.json';
 
 export async function fetchFullOrderData(orderId) {
+    let token;
+    if (process.env.DB_TYPE === 'mysql') {
+        token = await getConditionByName("apiKey")
+
+    } else if (process.env.DB_TYPE === 'sqlite') {
+        token = condition.token;
+    }
     try {
-        const { NhanhVN_Version, NhanhVN_AppId, NhanhVN_BusinessId, NhanhVN_AccessToken } = condition.token;
+        const { NhanhVN_Version, NhanhVN_AppId, NhanhVN_BusinessId, NhanhVN_AccessToken } = token;
 
         const formData = new FormData();
         formData.append('version', NhanhVN_Version);

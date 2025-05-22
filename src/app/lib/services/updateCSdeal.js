@@ -4,7 +4,12 @@ import condition from '../../data/condition.json';
 import { mapToDealFormatForUpdate } from '../handlers/commonOrderUtils';
 
 export async function updateDeal(data, dealId) {
-    const token = condition.token;
+    let token;
+    if (process.env.DB_TYPE === 'mysql') {
+        token = await getConditionByName("apiKey")
+    } else if (process.env.DB_TYPE === 'sqlite') {
+        token = condition.token;
+    }
     console.log('Updating deal with raw data:', JSON.stringify(data, null, 2));
     try {
         const dealUpdate = await mapToDealFormatForUpdate(data); // Thêm await
