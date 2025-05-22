@@ -1,5 +1,6 @@
 import fs from 'fs/promises';
 import path from 'path';
+import { getConditionByName } from '../db';
 
 export async function loadConfig() {
     if (process.env.DB_TYPE === 'mysql') {
