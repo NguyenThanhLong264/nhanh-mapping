@@ -69,7 +69,7 @@ const ConditionForm = () => {
                 alignItems: 'center', color: '#D9E1FC', px: '12px'
             }}>Các Token cần thiết
             </Box>
-            <Box sx={{ display: 'flex', p: '12px', gap: '12px' }}>
+            <Box sx={{ display: 'flex', p: '12px', gap: '12px', minHeight: '395px' }}>
                 {/* Left Column */}
                 <Box sx={{ flex: 1 }}>
                     {leftFields.map(([key]) => (
