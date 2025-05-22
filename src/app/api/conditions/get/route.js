@@ -13,11 +13,11 @@ export async function GET(request) {
             if (!value) {
                 value = conditions.token;
             }
-            // console.log("Get Value:", value);
         } else {
             // SQLite - lấy từ file json
             value = conditions.token;
         }
+        // console.log("Get Value:", value);
         return Response.json(maskSensitiveFields(value))
     } catch (error) {
         console.error('Error getting condition:', error);

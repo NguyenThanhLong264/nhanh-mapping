@@ -12,3 +12,21 @@ export default function maskSensitiveFields(obj) {
     }
     return masked;
 }
+
+export function hasMaskedValue(obj) {
+    if (typeof obj !== 'object' || obj === null) return false;
+    for (const key in obj) {
+        const value = obj[key];
+
+        if (typeof value === 'string' && value.includes('*')) {
+            return true;
+        }
+
+        if (typeof value === 'object' && value !== null) {
+            if (hasMaskedValue(value)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}

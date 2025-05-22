@@ -42,15 +42,23 @@ const ConditionForm = () => {
     const handleSave = async () => {
         setValues(tempValues);
         setEditMode(false);
-        // Save updated data to conditions API
-        await fetch('/api/conditions/update', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(tempValues)
-        });
+        try {
+            const res = await fetch('/api/conditions/update', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(tempValues)
+            });
+            if (!res.ok) {
+                const err = await res.json();
+                alert(`Saving failed: ${err.error || 'Unknown error'}`);
+                return;
+            }
+            alert("Saving Successful");
+        } catch (error) { alert(`Saving failed: ${error.message}`); }
     };
+
 
     const leftFields = Object.entries(values).filter(([key]) => key.startsWith('NhanhVN'));
     const rightFields = Object.entries(values).filter(([key]) => key.startsWith('CareSoft'));
