@@ -2,26 +2,26 @@
   {
     "name": "username",
     "type": "int",
-    "typeInput": "map",
-    "value": "customerName"
+    "typeInput": "normal",
+    "value": ""
   },
   {
     "name": "subject",
     "type": "int",
     "typeInput": "normal",
-    "value": "Đơn của {{customerName}}"
+    "value": ""
   },
   {
     "name": "phone",
     "type": "int",
-    "typeInput": "map",
-    "value": "customerMobile"
+    "typeInput": "normal",
+    "value": ""
   },
   {
     "name": "email",
     "type": "email",
-    "typeInput": "map",
-    "value": "customerEmail"
+    "typeInput": "normal",
+    "value": ""
   },
   {
     "name": "service_id",
@@ -39,19 +39,19 @@
     "name": "assignee_id",
     "type": "int",
     "typeInput": "normal",
-    "value": "228869982"
+    "value": ""
   },
   {
     "name": "pipeline_id",
     "type": "int",
     "typeInput": "normal",
-    "value": "24"
+    "value": ""
   },
   {
     "name": "estimated_closed_date",
     "type": "int",
-    "typeInput": "map",
-    "value": "deliveryDate"
+    "typeInput": "normal",
+    "value": ""
   },
   {
     "name": "deal_label",
@@ -63,39 +63,13 @@
     "name": "pipeline_stage_id",
     "type": "int",
     "typeInput": "pipeline_stage",
-    "value": [
-      {
-        "id": "174",
-        "value": "New"
-      },
-      {
-        "id": "175",
-        "value": "Confirming"
-      },
-      {
-        "id": "178",
-        "value": "Success"
-      }
-    ]
+    "value": []
   },
   {
     "name": "custom_fields",
     "type": "array",
     "typeInput": "custom",
-    "value": [
-      {
-        "id": "11454",
-        "value": "{{orderId}}"
-      },
-      {
-        "id": "7561",
-        "value": "111779"
-      },
-      {
-        "id": "10678",
-        "value": "5"
-      }
-    ]
+    "value": []
   },
   {
     "name": "probability",
@@ -106,26 +80,26 @@
   {
     "name": "value",
     "type": "int",
-    "typeInput": "map",
-    "value": "calcTotalMoney"
+    "typeInput": "normal",
+    "value": ""
   },
   {
     "name": "comment",
     "type": "int",
     "typeInput": "normal",
-    "value": "Thông tin hoá đơn:\nNgười mua: {{customerName}} - {{customerMobile}}\nNgày mua hàng: {{createdDateTime}}\nTrạng thái: {{statusDescription}}\nMô tả: {{description}}\nDanh sách mặt hàng:\n{{products}}\nTổng tiền hàng: {{calcTotalMoney}}"
+    "value": ""
   },
   {
     "name": "comment.body",
     "type": "int",
-    "typeInput": "map",
-    "value": "reason"
+    "typeInput": "normal",
+    "value": ""
   },
   {
     "name": "comment.is_public",
     "type": "int",
     "typeInput": "normal",
-    "value": "0"
+    "value": ""
   },
   {
     "name": "comment.author_id",
@@ -136,44 +110,44 @@
   {
     "name": "order_address_detail",
     "type": "int",
-    "typeInput": "map",
-    "value": "customerAddress"
+    "typeInput": "normal",
+    "value": ""
   },
   {
     "name": "order_buyer_note",
     "type": "int",
-    "typeInput": "map",
-    "value": "description"
+    "typeInput": "normal",
+    "value": ""
   },
   {
     "name": "order_city_id",
     "type": "int",
-    "typeInput": "map",
-    "value": "shipToCityLocationId"
+    "typeInput": "normal",
+    "value": ""
   },
   {
     "name": "order_district_id",
     "type": "int",
-    "typeInput": "map",
-    "value": "shipToDistrictLocationId"
+    "typeInput": "normal",
+    "value": ""
   },
   {
     "name": "order_ward_id",
     "type": "int",
-    "typeInput": "map",
-    "value": "shipToWardLocationId"
+    "typeInput": "normal",
+    "value": ""
   },
   {
     "name": "order_receiver_name",
     "type": "int",
-    "typeInput": "map",
-    "value": "customerName"
+    "typeInput": "normal",
+    "value": ""
   },
   {
     "name": "order_receiver_phone",
     "type": "int",
-    "typeInput": "map",
-    "value": "customerMobile"
+    "typeInput": "normal",
+    "value": ""
   },
   {
     "name": "order_status",
@@ -182,49 +156,49 @@
     "value": [
       {
         "status": "ORDER_STARTED",
-        "value": "New"
+        "value": ""
       },
       {
         "status": "BUYER_CONFIRMED",
-        "value": "CustomerConfirming"
+        "value": ""
       },
       {
         "status": "SELLER_CONFIRMED",
-        "value": "Confirmed"
+        "value": ""
       },
       {
         "status": "SHIPPING",
-        "value": "Shipping"
+        "value": ""
       },
       {
         "status": "RETURNED",
-        "value": "Returned"
+        "value": ""
       },
       {
         "status": "CANCELED",
-        "value": "Canceled"
+        "value": ""
       },
       {
         "status": "RECEIVED",
-        "value": "Pickup"
+        "value": ""
       },
       {
         "status": "COMPLETED",
-        "value": "Success"
+        "value": ""
       }
     ]
   },
   {
     "name": "order_tracking_code",
     "type": "int",
-    "typeInput": "map",
-    "value": "depotId"
+    "typeInput": "normal",
+    "value": ""
   },
   {
     "name": "order_tracking_url",
     "type": "int",
-    "typeInput": "map",
-    "value": "trackingUrl"
+    "typeInput": "normal",
+    "value": ""
   },
   {
     "name": "order_products",
@@ -235,8 +209,8 @@
       {
         "name": "sku",
         "type": "string",
-        "typeInput": "map",
-        "value": "id"
+        "typeInput": "normal",
+        "value": ""
       },
       {
         "name": "is_free",
@@ -246,26 +220,26 @@
       {
         "name": "unit_price",
         "type": "float",
-        "typeInput": "map",
-        "value": "price"
+        "typeInput": "normal",
+        "value": ""
       },
       {
         "name": "quantity",
         "type": "int",
-        "typeInput": "map",
-        "value": "quantity"
+        "typeInput": "normal",
+        "value": ""
       },
       {
         "name": "discount_markup",
         "type": "float",
-        "typeInput": "map",
-        "value": "discount"
+        "typeInput": "normal",
+        "value": ""
       },
       {
         "name": "discount_value",
         "type": "float",
-        "typeInput": "map",
-        "value": "discount"
+        "typeInput": "normal",
+        "value": ""
       }
     ]
   }
