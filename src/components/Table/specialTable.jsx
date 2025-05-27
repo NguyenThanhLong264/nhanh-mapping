@@ -83,10 +83,10 @@ const SpecialTable = ({ rows, onUpdateRow, title }) => {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Property</TableCell>
-            <TableCell>Status</TableCell>
+            <TableCell sx={{ width: '260px' }}>Property</TableCell>
+            <TableCell sx={{ width: '300px' }}>Status</TableCell>
             <TableCell>Value</TableCell>
-            <TableCell>Actions</TableCell>
+            <TableCell align="center" sx={{ width: '150px' }}>Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -138,7 +138,7 @@ const SpecialTable = ({ rows, onUpdateRow, title }) => {
                             }
                           />
                         </TableCell>
-                        <TableCell>
+                        <TableCell align="center">  
                           <Button
                             variant="contained"
                             color="error"

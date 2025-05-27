@@ -30,8 +30,8 @@ export default function NormalTable({
       <MuiTable>
         <TableHead>
           <TableRow>
-            <TableCell>Property</TableCell>
-            <TableCell align="center">Input Type</TableCell>
+            <TableCell sx={{ width: '360px' }}>Property</TableCell>
+            <TableCell align="center" sx={{ width: '300px' }}>Input Type</TableCell>
             <TableCell>Value</TableCell>
           </TableRow>
         </TableHead>

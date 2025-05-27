@@ -58,8 +58,8 @@ const ProductTable = ({
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Product Params</TableCell>
-            <TableCell align="center">Input Type</TableCell>
+            <TableCell sx={{ width: '300px' }}>Product Params</TableCell>
+            <TableCell align="center" sx={{ width: "300px" }}>Input Type</TableCell>
             <TableCell>Value</TableCell>
           </TableRow>
         </TableHead>
@@ -117,7 +117,7 @@ const ProductTable = ({
           ))}
         </TableBody>
       </Table>
-    </Paper>
+    </Paper >
   );
 };
 

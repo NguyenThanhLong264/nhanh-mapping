@@ -35,10 +35,10 @@ const CustomFieldsTable = ({ rows, onUpdateRow, title }) => {
             <Table>
                 <TableHead>
                     <TableRow>
-                        <TableCell>Name</TableCell>
-                        <TableCell>ID</TableCell>
+                        <TableCell sx={{ width: '200px' }}>Name</TableCell>
+                        <TableCell sx={{ width: '380px' }}>ID</TableCell>
                         <TableCell>Value</TableCell>
-                        <TableCell>Actions</TableCell>
+                        <TableCell align='center' sx={{ width: '150px' }}>Actions</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -83,7 +83,7 @@ const CustomFieldsTable = ({ rows, onUpdateRow, title }) => {
                                                 }
                                             />
                                         </TableCell>
-                                        <TableCell>
+                                        <TableCell align='center'>
                                             <Button
                                                 variant="contained"
                                                 color="error"
