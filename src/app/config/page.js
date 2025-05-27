@@ -32,7 +32,7 @@ export default function GGsheetMapPage() {
             }
 
             const result = await response.json();
-            console.log("Server response:", result);
+            // console.log("Server response:", result);
             return true;
         } catch (error) {
             console.error("Error saving config to server:", error);
@@ -45,7 +45,7 @@ export default function GGsheetMapPage() {
             const res = await fetch('/api/config/load?name=config');
             const data = await res.json();
             if (!res.ok) throw new Error(`Error: ${data.error}`);
-            console.log("Loaded config UI:", data);
+            // console.log("Loaded config UI:", data);
             setRowsConfig(data);
         } catch (err) {
             console.error('Failed to load config:', err);
