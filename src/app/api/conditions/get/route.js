@@ -18,7 +18,8 @@ export async function GET(request) {
             value = conditions.token;
         }
         // console.log("Get Value:", value);
-        return Response.json(maskSensitiveFields(value))
+        // return Response.json(maskSensitiveFields(value))
+        return Response.json(value)
     } catch (error) {
         console.error('Error getting condition:', error);
         return Response.json(

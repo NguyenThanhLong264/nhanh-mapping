@@ -1,5 +1,6 @@
 import axios from "axios";
 import { getConditionByName } from "../db";
+import condition from "../../data/condition.json";
 
 let token;
 if (process.env.DB_TYPE === 'mysql') {
@@ -26,11 +27,11 @@ export async function isCustomerExsit(deal) {
 
         if (data.code === "ok" && data.contact) {
             const contact = data.contact;
-            await updateCustomer(deal, contact.id);  // Added await here
+            await updateCustomer(deal, contact.id);
             return true;
-        } else if (data.code === "errors" && data.message === "Not found user, creating") {
+        } else if (data.code === "errors" && data.message === "Not found user") {
             const contact = data.contact;
-            await createCustomer(contact);  // Added await here
+            await createCustomer(contact);
             return false;
         } else {
             return {
