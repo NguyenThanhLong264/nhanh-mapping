@@ -29,7 +29,7 @@ const GuideButton = ({ tooltipText = "Help\ninformation" }) => {
           },
         }}
       >
-        <IconButton color="primary">
+        <IconButton color="primary" aria-label="help">
           <HelpOutlineIcon />
         </IconButton>
       </Tooltip>
