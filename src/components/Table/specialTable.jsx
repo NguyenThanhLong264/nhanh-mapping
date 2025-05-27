@@ -73,7 +73,7 @@ const SpecialTable = ({ rows, onUpdateRow, title }) => {
   };
 
   return (
-    <Paper sx={{ mb: 4, borderRadius: 2, overflow: "hidden" }}>
+    <Paper sx={{ mb: 4, borderRadius: 2, overflow: "hidden", minHeight: "985px" }}>
       <Typography
         variant="h6"
         sx={{ p: 2, bgcolor: "#3D55CC", color: "white" }}

@@ -17,7 +17,7 @@ export async function createCSdeal(dealData, body) {
   const orderId = data.orderId
   const businessId = body.businessId
   try {
-    console.log("createCSdeal - Deal data:", dealData);
+    // console.log("createCSdeal - Deal data:", dealData);
 
     const axiosConfig = {
       method: 'post',
