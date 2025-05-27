@@ -12,15 +12,15 @@ export async function handleOrderUpdate(body) {
   let response;
   if (!dealId) {
     fetchOrderData = await fetchFullOrderData(data.orderId)
-    console.log('handleOrderUpdate - fetchOrderData', fetchOrderData);
+    // console.log('handleOrderUpdate - fetchOrderData', fetchOrderData);
     const dealData = await mapToDealFormat(fetchOrderData);
-    console.log('handleOrderUpdate - dealdata', dealData);
+    // console.log('handleOrderUpdate - dealdata', dealData);
     response = await createCSdeal(dealData, body);
   } else {
-    console.log('handleOrderUpdate - update deal');
+    // console.log('handleOrderUpdate - update deal');
     response = await updateDeal(data, dealId)
   }
-  console.log('Done Update');
+  // console.log('Done Update');
 
   return {
     status: response.status,

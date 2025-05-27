@@ -54,8 +54,8 @@ export async function isCustomerExsit(deal) {
 
 export async function updateCustomer(contact, id) {
     try {
-        console.log(`Updating customer with ID: ${id}`);
-        console.log('Customer data:', contact);
+        // console.log(`Updating customer with ID: ${id}`);
+        // console.log('Customer data:', contact);
 
         const data = JSON.stringify({
             contact: {
@@ -74,9 +74,9 @@ export async function updateCustomer(contact, id) {
             data: data
         };
 
-        console.log('Sending update request...');
+        // console.log('Sending update request...');
         const response = await axios.request(config);
-        console.log('Update successful:', response.data);
+        // console.log('Update successful:', response.data);
 
         return {
             status: 200,
@@ -95,8 +95,8 @@ export async function updateCustomer(contact, id) {
 
 export async function createCustomer(contact) {
     try {
-        console.log('Creating new customer');
-        console.log('Customer data:', contact);
+        // console.log('Creating new customer');
+        // console.log('Customer data:', contact);
 
         const data = JSON.stringify({
             contact: {
@@ -116,9 +116,9 @@ export async function createCustomer(contact) {
             data: data
         };
 
-        console.log('Sending create request...');
+        // console.log('Sending create request...');
         const response = await axios.request(config);
-        console.log('Create successful:', response.data);
+        // console.log('Create successful:', response.data);
 
         return {
             status: 200,

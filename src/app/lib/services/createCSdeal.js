@@ -12,6 +12,7 @@ export async function createCSdeal(dealData, body) {
   } else if (process.env.DB_TYPE === 'sqlite') {
     token = condition.token;
   }
+
   const data = body.data
   const orderId = data.orderId
   const businessId = body.businessId

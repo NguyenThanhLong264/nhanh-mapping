@@ -132,7 +132,7 @@ export async function getConditionByName(name) {
             'SELECT value FROM config WHERE name = ?',
             [name]
         );
-        console.log(`DB - Loaded condition: name=${name}`, rows[0].value);
+        // console.log(`DB - Loaded condition: name=${name}`, rows[0].value);
         return rows[0] ? rows[0].value : null;
     } catch (error) {
         console.error('DB - Error getting condition:', error);

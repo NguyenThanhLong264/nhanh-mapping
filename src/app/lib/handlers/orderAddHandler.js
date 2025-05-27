@@ -4,7 +4,7 @@ import { createCSdeal } from '../services/createCSdeal.js';
 
 export async function handleOrderAdd(body) {
   console.log('Handling orderAdd');
-  console.log('handleOrderAdd - body', body);
+  // console.log('handleOrderAdd - body', body);
 
   const dealData = await mapToDealFormat(body.data);
   const response = await createCSdeal(dealData, body);

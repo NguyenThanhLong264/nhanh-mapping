@@ -4,11 +4,10 @@ import condition from '../../data/condition.json';
 import { getConditionByName } from '@/app/lib/db';
 
 export async function POST(request) {
-    // const token = condition.token;
+    // console.log("Condition:", condition);
     let token;
     if (process.env.DB_TYPE === 'mysql') {
         token = await getConditionByName("apiKey")
-
     } else if (process.env.DB_TYPE === 'sqlite') {
         token = condition.token;
     }

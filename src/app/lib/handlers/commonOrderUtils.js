@@ -28,11 +28,11 @@ export async function mapToDealFormat(orderData) {
     if (typeInput === "pipeline_stage") {
       const matchedStage = value.find(stage => stage.value === orderData.status);
       deal[name] = matchedStage ? matchedStage.id : "";
-      console.log(`Pipeline stage mapping: ${orderData.status} -> ${deal[name]}`);
+      // console.log(`Pipeline stage mapping: ${orderData.status} -> ${deal[name]}`);
     } else if (typeInput === "status") {
       const matchedStatus = value.find(status => status.value === orderData.status);
       deal[name] = matchedStatus ? matchedStatus.status : "ORDER_STARTED";
-      console.log(`Order status mapping: ${orderData.status} -> ${deal[name]}`);
+      // console.log(`Order status mapping: ${orderData.status} -> ${deal[name]}`);
     }
   });
 
@@ -64,7 +64,7 @@ export async function mapToDealFormat(orderData) {
   });
 
   const cleanedDeal = cleanEmptyValues(deal);
-  console.log("Final cleaned deal", cleanedDeal);
+  // console.log("Final cleaned deal", cleanedDeal);
   return cleanedDeal;
 }
 
@@ -98,6 +98,6 @@ export async function mapToDealFormatForUpdate(orderData) {
   delete deal["comment.author_id"];
 
   const cleanedDeal = cleanEmptyValues(deal);
-  console.log("Final cleaned deal", cleanedDeal);
+  // console.log("Final cleaned deal", cleanedDeal);
   return cleanedDeal;
 }

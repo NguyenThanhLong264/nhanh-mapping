@@ -6,6 +6,7 @@ export const dealFields = [
     { name: 'service_id', type: 'int', note: 'Dịch vụ tiếp nhận' },
     { name: 'group_id', type: 'int', note: 'ID bộ phận tiếp nhận' },
     { name: 'assignee_id', type: 'int', note: 'ID chuyên viên tiếp nhận' },
+    { name: 'campaign_id', type: 'int', note: 'ID chiến dịch' },
     { name: 'pipeline_id', type: 'int', note: 'ID tiến trình (Mặc định theo cấu hình)' },
     { name: 'estimated_closed_date', type: 'DateTime', note: 'Dự kiến hoàn thành (Định dạng YYYY-MM-DD HH:mm:ss)' },
     { name: 'deal_label', type: 'array', note: 'Mảng ID label của deal dạng [1,2,3]', guide: `Ví dụ: 11,12` },
