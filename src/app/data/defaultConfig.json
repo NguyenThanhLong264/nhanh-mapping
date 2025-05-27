@@ -48,6 +48,12 @@
         "value": ""
     },
     {
+        "name": "campaign_id",
+        "type": "int",
+        "typeInput": "normal",
+        "value": ""
+    },
+    {
         "name": "estimated_closed_date",
         "type": "int",
         "typeInput": "normal",
