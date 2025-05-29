@@ -120,3 +120,15 @@ The application will be available at: [http://localhost:3000](http://localhost:3
    - Kiểm tra các trường đã ánh xạ có đúng không
    - Thử cập nhật trạng thái đơn hàng để kiểm tra đồng bộ
 
+6. **Cấu hình Https**
+   - trong thư mục gốc của dự án, tạo thêm 1 folder tên cert chứa 2 file cert.pem và key.pem
+   ![folder_cert](public/guidePic/cert_folder.png)
+   - copy lấy từ trong file Nginx có 2 file .key và .pem, nối như sau:
+      - .key vào cert/key.pem
+      - .pem vào cert/cert.pem
+   - rồi chạy lại 
+   ```bash
+   npm i
+   npm run build
+   npm start
+   ```

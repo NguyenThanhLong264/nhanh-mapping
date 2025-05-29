@@ -18,6 +18,6 @@ app.prepare().then(() => {
     https.createServer(httpsOptions, (req, res) => {
         handle(req, res);
     }).listen(port, () => {
-        console.log(`✅ HTTPS server is running at https://localhost:${port}`);
+        console.log(`✅ HTTPS server is running at https://ngoinhachungsavani.com:${port}`);
     });
 });
