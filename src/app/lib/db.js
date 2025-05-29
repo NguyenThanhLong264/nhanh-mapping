@@ -45,6 +45,18 @@ async function getDb() {
                     appid TEXT NOT NULL
                 )
             `);
+            await dbInstance.run(`
+                CREATE TRIGGER IF NOT EXISTS limit_order_deal_mapping
+                AFTER INSERT ON order_deal_mapping
+                BEGIN
+                DELETE FROM order_deal_mapping
+                WHERE rowid NOT IN (
+                    SELECT rowid FROM order_deal_mapping
+                    ORDER BY rowid DESC
+                    LIMIT 10000
+                );
+                END;
+            `);
         }
     }
     return dbInstance;
