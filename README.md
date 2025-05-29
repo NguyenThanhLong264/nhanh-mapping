@@ -26,11 +26,16 @@ Một ứng dụng trung gian giúp tích hợp liền mạch giữa các đơn 
    ```bash
    git clone https://github.com/NguyenThanhLong264/nhanh-mapping.git
    ```
+   - Hoặc có thể tải file .zip rồi giải nén (lựa chọn ở phần Code)
 
 2. Di chuyển vào thư mục dự án:
 
    ```bash
-   cd nhanh-vn
+   cd nhanh-mapping
+   ```
+   Hoặc nếu tải .zip
+   ```bash
+   cd nhanh-mapping-nhanh-mapping
    ```
 
 3. Cài đặt thư viện:
@@ -50,6 +55,7 @@ npm run dev
 ### Production Mode
 
 ```bash
+npm run build
 npm start
 ```
 
