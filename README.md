@@ -68,7 +68,7 @@ The application will be available at: [http://localhost:3000](http://localhost:3
    - Thực hiện các bước cài đặt như ở phần trên
    - Khởi chạy ứng dụng bằng chế độ development hoặc production
    - Truy cập giao diện tại `http://localhost:3000`
-   - **Đảm bảo ứng dụng có thể truy cập qua HTTPS** (ví dụ: ngrok, localtunel, hoặc cài chứng chỉ với mkcert)
+   - **Đảm bảo ứng dụng có thể truy cập qua HTTPS** (ví dụ: ngrok, localtunel, hoặc cài chứng chỉ với mkcert, hoặc cách khác)
 
 2. **Cấu Hình API**
 
