@@ -63,7 +63,7 @@ export async function mapToDealFormat(orderData) {
   });
 
   const cleanedDeal = cleanEmptyValues(deal);
-  console.log("Final cleaned deal", cleanedDeal);
+  // console.log("Final cleaned deal", cleanedDeal);
   return cleanedDeal;
 }
 
@@ -97,6 +97,6 @@ export async function mapToDealFormatForUpdate(orderData) {
   delete deal["comment.author_id"];
 
   const cleanedDeal = cleanEmptyValues(deal);
-  console.log("Final cleaned deal", cleanedDeal);
+  // console.log("Final cleaned deal", cleanedDeal);
   return cleanedDeal;
 }

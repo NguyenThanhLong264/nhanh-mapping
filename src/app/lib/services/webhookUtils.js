@@ -45,7 +45,7 @@ export function mapOrderStatus(nhanhStatus, config) {
             const web2Status = key.replace('order_status.', '');
             if (value === nhanhStatus) {
                 mappedStatus = web2Status;
-                console.log(`Mapped order_status: ${nhanhStatus} -> ${web2Status}`);
+                // console.log(`Mapped order_status: ${nhanhStatus} -> ${web2Status}`);
                 statusMapped = true;
                 break;
             }
@@ -65,7 +65,7 @@ export function mapPipelineStageId(nhanhStatus, config) {
             const status = key.replace('pipeline_stage_id.', '');
             if (status === nhanhStatus) {
                 mappedId = value;
-                console.log(`Mapped pipeline_stage_id: ${nhanhStatus} -> ${value}`);
+                // console.log(`Mapped pipeline_stage_id: ${nhanhStatus} -> ${value}`);
                 idMapped = true;
                 break;
             }

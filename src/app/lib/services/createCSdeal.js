@@ -32,7 +32,7 @@ export async function createCSdeal(dealData, body) {
     };
 
     const web2Response = await axios.request(axiosConfig);
-    console.log('createCSdeal - Web 2 response:', JSON.stringify(web2Response.data));
+    // console.log('createCSdeal - Web 2 response:', JSON.stringify(web2Response.data));
 
     const dealId = web2Response.data.deal?.id;
     const appid = token.NhanhVN_AppId;

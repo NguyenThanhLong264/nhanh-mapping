@@ -12,10 +12,10 @@ export async function updateDeal(data, dealId) {
         const condition = await readCondition();
         token = condition;
     }
-    console.log('Updating deal with raw data:', JSON.stringify(data, null, 2));
+    // console.log('Updating deal with raw data:', JSON.stringify(data, null, 2));
     try {
         const dealUpdate = await mapToDealFormatForUpdate(data); // Thêm await
-        console.log('Deal after mapping:', JSON.stringify(dealUpdate, null, 2));
+        // console.log('Deal after mapping:', JSON.stringify(dealUpdate, null, 2));
 
         const axiosConfig = {
             method: 'put',

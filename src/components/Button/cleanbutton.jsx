@@ -22,7 +22,7 @@ const CleanButton = ({ text = "Refresh", storageName, value }) => {
         }
 
         const result = await response.json();
-        console.log("Save result:", result);
+        // console.log("Save result:", result);
         window.location.reload();
       } catch (error) {
         console.error("Save error:", error);

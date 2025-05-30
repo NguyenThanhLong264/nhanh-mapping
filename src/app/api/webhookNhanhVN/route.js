@@ -11,7 +11,7 @@ export async function POST(request) {
         const condition = await readCondition();
         token = condition;
     }
-    console.log("Token:", token);
+    // console.log("Token:", token);
 
     try {
         const body = await request.json();
