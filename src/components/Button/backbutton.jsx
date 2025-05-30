@@ -9,7 +9,7 @@ const BackButton = () => {
   return (
     <IconButton
       aria-label="Back"
-      onClick={() => router.back()}
+      onClick={() => router.push("/")}
       sx={{
         position: "fixed",
         top: 16,
