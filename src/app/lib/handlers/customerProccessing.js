@@ -1,13 +1,14 @@
 import axios from "axios";
 import { getConditionByName } from "../db";
-import condition from "../../data/condition.json";
+import { readCondition } from "./readJSON";
 
 let token;
 if (process.env.DB_TYPE === 'mysql') {
     token = await getConditionByName("apiKey")
 
 } else if (process.env.DB_TYPE === 'sqlite') {
-    token = condition.token;
+    const condition = await readCondition();
+    token = condition;
 }
 
 export async function isCustomerExsit(deal) {

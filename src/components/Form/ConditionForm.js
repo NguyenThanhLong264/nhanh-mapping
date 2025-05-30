@@ -1,7 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import { Box, Button, Typography } from '@mui/material'
-import conditions from '@/app/data/condition.json'
 import { useRouter } from 'next/navigation'
 
 const ConditionForm = () => {

@@ -4,10 +4,10 @@ import { getConditionByName } from '../db';
 
 export async function loadConfig() {
     if (process.env.DB_TYPE === 'mysql') {
-        return await getConditionByName("config")
+        return await getConditionByName("config");
     }
     else if (process.env.DB_TYPE === 'sqlite') {
-        const configPath = path.join(process.cwd(), 'src', 'app', 'data', 'config.json');
+        const configPath = path.join(process.cwd(), 'data', 'config.json');
         try {
             const configData = await fs.readFile(configPath, 'utf8');
             return JSON.parse(configData);
@@ -24,7 +24,7 @@ export function replacePlaceholders(template, data) {
     // Xử lý đặc biệt cho products
     if (template.includes('{{products}}') && data.products && Array.isArray(data.products)) {
         const productsText = data.products.map(p => {
-            return `- ID Nhanh: ${p.id} - SL: ${p.quantity} - KL: ${p.weight}g - Discount: ${p.discount}VND  - Giá: ${p.price}VND`;
+            return `- ID Nhanh: ${p.productId} - Tên: ${p.productName} - SL: ${p.quantity} - KL: ${p.weight}g - Discount: ${p.discount}VND  - Giá: ${p.price}VND`;
         }).join('\n');
         template = template.replace('{{products}}', productsText);
     }

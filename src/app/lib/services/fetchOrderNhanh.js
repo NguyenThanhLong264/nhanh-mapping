@@ -1,8 +1,9 @@
 // lib/services/nhanh/fetchFullOrderData.js
 import axios from 'axios';
 import FormData from 'form-data';
-import condition from '../../data/condition.json';
 import { getConditionByName } from '../db';
+import { readCondition } from '../handlers/readJSON';
+import { fetchCustomerInfo } from './fetchCustomerNhanhvn';
 
 export async function fetchFullOrderData(orderId) {
     let token;
@@ -10,7 +11,8 @@ export async function fetchFullOrderData(orderId) {
         token = await getConditionByName("apiKey")
 
     } else if (process.env.DB_TYPE === 'sqlite') {
-        token = condition.token;
+        const condition = await readCondition();
+        token = condition;
     }
     try {
         const { NhanhVN_Version, NhanhVN_AppId, NhanhVN_BusinessId, NhanhVN_AccessToken } = token;
@@ -38,7 +40,12 @@ export async function fetchFullOrderData(orderId) {
                     id: p.productId,
                 }));
             }
-
+            if (fullOrder.customerId) {
+                const customerData = await fetchCustomerInfo(fullOrder.customerId);
+                if (customerData) {
+                    Object.assign(fullOrder, customerData);
+                }
+            }
             return fullOrder;
         }
 

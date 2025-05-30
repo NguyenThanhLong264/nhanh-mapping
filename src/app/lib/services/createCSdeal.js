@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { saveOrderDealMapping } from '../db';
-import condition from '../../data/condition.json'
 import { isCustomerExsit } from '../handlers/customerProccessing';
 import { getConditionByName } from '../db';
+import { readCondition } from '../handlers/readJSON';
 
 export async function createCSdeal(dealData, body) {
   let token;
@@ -10,7 +10,8 @@ export async function createCSdeal(dealData, body) {
     token = await getConditionByName("apiKey")
 
   } else if (process.env.DB_TYPE === 'sqlite') {
-    token = condition.token;
+    const condition = await readCondition();
+    token = condition;
   }
 
   const data = body.data

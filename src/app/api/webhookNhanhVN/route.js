@@ -1,16 +1,17 @@
 import { NextResponse } from 'next/server';
 import { webhookDispatcher } from '../../lib/handlers/webhookDispatcher';
-import condition from '../../data/condition.json';
 import { getConditionByName } from '@/app/lib/db';
+import { readCondition } from '@/app/lib/handlers/readJSON';
 
 export async function POST(request) {
-    // console.log("Condition:", condition);
     let token;
     if (process.env.DB_TYPE === 'mysql') {
         token = await getConditionByName("apiKey")
     } else if (process.env.DB_TYPE === 'sqlite') {
-        token = condition.token;
+        const condition = await readCondition();
+        token = condition;
     }
+    console.log("Token:", token);
 
     try {
         const body = await request.json();

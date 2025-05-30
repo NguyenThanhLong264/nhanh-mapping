@@ -9,7 +9,7 @@
     "name": "subject",
     "type": "int",
     "typeInput": "normal",
-    "value": "Đơn của {{customerName}}"
+    "value": "Đơn hàng thành công"
   },
   {
     "name": "phone",
@@ -88,20 +88,7 @@
     "name": "custom_fields",
     "type": "array",
     "typeInput": "custom",
-    "value": [
-      {
-        "id": "11454",
-        "value": "{{orderId}}"
-      },
-      {
-        "id": "7561",
-        "value": "111779"
-      },
-      {
-        "id": "10678",
-        "value": "5"
-      }
-    ]
+    "value": []
   },
   {
     "name": "probability",
@@ -113,13 +100,13 @@
     "name": "value",
     "type": "int",
     "typeInput": "map",
-    "value": "calcTotalMoney"
+    "value": "couponCode"
   },
   {
     "name": "comment",
     "type": "int",
     "typeInput": "normal",
-    "value": "Thông tin hoá đơn:\nNgười mua: {{customerName}} - {{customerMobile}}\nNgày mua hàng: {{createdDateTime}}\nTrạng thái: {{statusDescription}}\nMô tả: {{description}}\nDanh sách mặt hàng:\n{{products}}\nTổng tiền hàng: {{calcTotalMoney}}"
+    "value": "Note: Những mảng có thể cần dùng:\n- Tên khách hàng: {{customerName}}\n- SĐT khách hàng: {{customerMobile}}\n- Tiêu đề Deal: Tự điền (không map)\n- Nội dung ghi chú: Nhìn ví dụ này\n- Giá trị đơn hàng: calcTotalMoney = {{calcTotalMoney}}\n- Tên cửa hàng: depotName = {{depotName}}\n- Điểm tích lũy: customer_points = {{customer_points}}\n- mã voucher: couponCode = {{couponCode}}"
   },
   {
     "name": "comment.body",

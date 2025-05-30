@@ -11,7 +11,6 @@ function cleanEmptyValues(obj) {
 export async function mapToDealFormat(orderData) {
   const config = await loadConfig();
   const { normal, special, product, custom } = configClassify(config);
-  const orderId = orderData.orderId;
   const deal = {};
 
   normal.forEach(obj => {
@@ -37,7 +36,7 @@ export async function mapToDealFormat(orderData) {
   });
 
   product.forEach(obj => {
-    const { name, typeInput, subFields } = obj;
+    const { name, subFields } = obj;
     deal[name] = (orderData.products || []).map(product => {
       const mappedProduct = {};
       subFields.forEach(field => {
@@ -64,7 +63,7 @@ export async function mapToDealFormat(orderData) {
   });
 
   const cleanedDeal = cleanEmptyValues(deal);
-  // console.log("Final cleaned deal", cleanedDeal);
+  console.log("Final cleaned deal", cleanedDeal);
   return cleanedDeal;
 }
 
@@ -98,6 +97,6 @@ export async function mapToDealFormatForUpdate(orderData) {
   delete deal["comment.author_id"];
 
   const cleanedDeal = cleanEmptyValues(deal);
-  // console.log("Final cleaned deal", cleanedDeal);
+  console.log("Final cleaned deal", cleanedDeal);
   return cleanedDeal;
 }

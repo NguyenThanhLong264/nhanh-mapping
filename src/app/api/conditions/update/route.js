@@ -1,8 +1,6 @@
 import { saveCondition } from '@/app/lib/db';
 import { hasMaskedValue } from '@/app/lib/handlers/maskedToken';
-import { error } from 'console';
-import fs from 'fs';
-import path from 'path';
+import { writeCondition } from '@/app/lib/handlers/readJSON';
 
 export async function POST(request) {
     try {
@@ -12,8 +10,7 @@ export async function POST(request) {
                 const name = "apiKey"
                 await saveCondition(name, JSON.stringify(data));
             } else if (process.env.DB_TYPE === 'sqlite') {
-                const filePath = path.join(process.cwd(), 'src/app/data/condition.json');
-                fs.writeFileSync(filePath, JSON.stringify({ token: data }, null, 2));
+                await writeCondition(data)
             } else { return Response.json({ error }) }
         } else {
             return Response.json(

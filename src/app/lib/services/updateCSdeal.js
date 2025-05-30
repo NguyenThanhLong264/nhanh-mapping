@@ -1,15 +1,16 @@
 // lib/services/deal/updateDeal.js
 import axios from 'axios';
-import condition from '../../data/condition.json';
 import { mapToDealFormatForUpdate } from '../handlers/commonOrderUtils';
 import { getConditionByName } from '../db';
+import { readCondition } from '../handlers/readJSON';
 
 export async function updateDeal(data, dealId) {
     let token;
     if (process.env.DB_TYPE === 'mysql') {
         token = await getConditionByName("apiKey")
     } else if (process.env.DB_TYPE === 'sqlite') {
-        token = condition.token;
+        const condition = await readCondition();
+        token = condition;
     }
     console.log('Updating deal with raw data:', JSON.stringify(data, null, 2));
     try {

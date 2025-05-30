@@ -1,6 +1,7 @@
 import sqlite3 from 'sqlite3';
 import { open } from 'sqlite';
 import mysql from 'mysql2/promise';
+import path from 'path';
 
 let dbInstance = null;
 
@@ -31,9 +32,8 @@ async function getDb() {
                 );
             `);
         } else {
-            // SQLite (mặc định)
             dbInstance = await open({
-                filename: './src/app/data/webhook_mapping.db',
+                filename: path.join(process.cwd(), 'data', 'webhook_mapping.db'),
                 driver: sqlite3.Database,
             });
             await dbInstance.run('PRAGMA journal_mode = WAL;');

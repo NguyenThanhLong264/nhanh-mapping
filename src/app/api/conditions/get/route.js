@@ -1,5 +1,5 @@
 import { getConditionByName } from '@/app/lib/db';
-import conditions from '@/app/data/condition.json';
+import { readCondition } from '@/app/lib/handlers/readJSON';
 import maskSensitiveFields from '@/app/lib/handlers/maskedToken';
 
 export async function GET(request) {
@@ -11,14 +11,12 @@ export async function GET(request) {
         if (process.env.DB_TYPE === 'mysql') {
             value = await getConditionByName(name);
             if (!value) {
-                value = conditions.token;
+                value = condition.token;
             }
         } else {
-            // SQLite - lấy từ file json
-            value = conditions.token;
+            const condition = await readCondition();
+            value = condition;
         }
-        // console.log("Get Value:", value);
-        // return Response.json(maskSensitiveFields(value))
         return Response.json(value)
     } catch (error) {
         console.error('Error getting condition:', error);
