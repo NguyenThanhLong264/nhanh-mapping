@@ -13,9 +13,11 @@ export async function GET(request) {
     try {
         const dir = path.join(process.cwd(), "data");
         const filePath = path.join(dir, "check.txt");
+        const now = new Date();
+        const vnTime = now.toLocaleString('en-US', { timeZone: 'Asia/Ho_Chi_Minh' });
 
         if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-        fs.writeFileSync(filePath, "✅ File được ghi lúc: " + new Date().toISOString());
+        fs.writeFileSync(filePath, "✅ File được ghi lúc: " + vnTime);
 
         const content = fs.readFileSync(filePath, "utf8");
 
