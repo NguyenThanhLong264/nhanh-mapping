@@ -63,6 +63,8 @@ export async function mapToDealFormat(orderData) {
   });
 
   custom.forEach(obj => {
+    console.log("customfield obj:", obj);
+
     const { name, value } = obj;
     if (Array.isArray(value)) {
       deal[name] = (value || []).map(item => {
@@ -75,6 +77,20 @@ export async function mapToDealFormat(orderData) {
             /\b(\d{4})-(\d{2})-(\d{2})(?:\s+\d{2}:\d{2}:\d{2})?\b/g,
             (_, y, m, d) => `${y}/${m}/${d}`
           );
+        }
+        if (item.type === 'picklist' && Array.isArray(item.options)) {
+          const actualValue = replaced.value;
+          const matchedOption = item.options.find(opt => {
+            const small = replacePlaceholders(opt.smallvalue || '', orderData);
+            return small === actualValue;
+          });
+          if (matchedOption) {
+            replaced.value = matchedOption.optionId ?? matchedOption.option;
+          }
+          return {
+            id: item.id,
+            value: replaced.value
+          };
         }
         return replaced;
       });

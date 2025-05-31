@@ -39,25 +39,25 @@
     "name": "assignee_id",
     "type": "int",
     "typeInput": "normal",
-    "value": "228869982"
+    "value": "175842325"
   },
   {
     "name": "pipeline_id",
     "type": "int",
     "typeInput": "normal",
-    "value": "24"
+    "value": "233"
   },
   {
     "name": "campaign_id",
     "type": "int",
     "typeInput": "normal",
-    "value": "89103"
+    "value": "94050"
   },
   {
     "name": "estimated_closed_date",
     "type": "int",
-    "typeInput": "map",
-    "value": "deliveryDate"
+    "typeInput": "normal",
+    "value": ""
   },
   {
     "name": "deal_label",
@@ -69,26 +69,361 @@
     "name": "pipeline_stage_id",
     "type": "int",
     "typeInput": "pipeline_stage",
-    "value": [
-      {
-        "id": "174",
-        "value": "New"
-      },
-      {
-        "id": "175",
-        "value": "Confirming"
-      },
-      {
-        "id": "178",
-        "value": "Success"
-      }
-    ]
+    "value": []
   },
   {
     "name": "custom_fields",
     "type": "array",
     "typeInput": "custom",
-    "value": []
+    "value": [
+      {
+        "id": "8386",
+        "value": "171018"
+      },
+      {
+        "id": "11802",
+        "value": "{{customerMobile}}"
+      },
+      {
+        "id": "11804",
+        "value": "{{couponCode}}"
+      },
+      {
+        "id": "11406",
+        "value": "{{customer_points}}"
+      },
+      {
+        "id": "11803",
+        "value": "{{createdDateTime}}"
+      },
+      {
+        "id": "8391",
+        "value": "{{depotName}}",
+        "type": "picklist",
+        "options": [
+          {
+            "optionId": 124432,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 124434,
+            "smallvalue": "Atherine"
+          },
+          {
+            "optionId": 124435,
+            "smallvalue": "12"
+          },
+          {
+            "optionId": 124436,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 124439,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 124441,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 124444,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 124445,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 124446,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 124447,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 124448,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 124449,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 124450,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 124451,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 124452,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 124453,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 124454,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 124455,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 124456,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 155233,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 155815,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 155816,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 155817,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167287,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167288,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167289,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167290,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167291,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167292,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167293,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167294,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167295,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167296,
+            "smallvalue": "23"
+          },
+          {
+            "optionId": 167297,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167298,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167299,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167300,
+            "smallvalue": "13"
+          },
+          {
+            "optionId": 167301,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167302,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167303,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167304,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167305,
+            "smallvalue": "13"
+          },
+          {
+            "optionId": 167306,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167307,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167308,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167309,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167310,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167311,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167312,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167313,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167314,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167315,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167316,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167317,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167318,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167319,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167320,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167321,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167322,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167323,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167324,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167325,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167326,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167327,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167328,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167329,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167330,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167331,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167332,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167333,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167334,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167335,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167336,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167337,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167338,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167339,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 167340,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 168272,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 168273,
+            "smallvalue": "123"
+          },
+          {
+            "optionId": 171285,
+            "smallvalue": "123"
+          }
+        ]
+      }
+    ]
   },
   {
     "name": "probability",
@@ -106,19 +441,19 @@
     "name": "comment",
     "type": "int",
     "typeInput": "normal",
-    "value": "Note: Những mảng có thể cần dùng:\n- Tên khách hàng: {{customerName}}\n- SĐT khách hàng: {{customerMobile}}\n- Tiêu đề Deal: Tự điền (không map)\n- Nội dung ghi chú: Nhìn ví dụ này\n- Giá trị đơn hàng: calcTotalMoney = {{calcTotalMoney}}\n- Tên cửa hàng: depotName = {{depotName}}\n- Điểm tích lũy: customer_points = {{customer_points}}\n- mã voucher: couponCode = {{couponCode}}\n- product:\n{{products}}"
+    "value": ""
   },
   {
     "name": "comment.body",
     "type": "int",
-    "typeInput": "map",
-    "value": "reason"
+    "typeInput": "normal",
+    "value": ""
   },
   {
     "name": "comment.is_public",
     "type": "int",
     "typeInput": "normal",
-    "value": "0"
+    "value": ""
   },
   {
     "name": "comment.author_id",
@@ -135,8 +470,8 @@
   {
     "name": "order_buyer_note",
     "type": "int",
-    "typeInput": "map",
-    "value": "description"
+    "typeInput": "normal",
+    "value": ""
   },
   {
     "name": "order_city_id",
@@ -210,14 +545,14 @@
   {
     "name": "order_tracking_code",
     "type": "int",
-    "typeInput": "map",
-    "value": "depotId"
+    "typeInput": "normal",
+    "value": ""
   },
   {
     "name": "order_tracking_url",
     "type": "int",
-    "typeInput": "map",
-    "value": "trackingUrl"
+    "typeInput": "normal",
+    "value": ""
   },
   {
     "name": "order_products",
@@ -228,8 +563,8 @@
       {
         "name": "sku",
         "type": "string",
-        "typeInput": "map",
-        "value": "productId"
+        "typeInput": "normal",
+        "value": ""
       },
       {
         "name": "is_free",

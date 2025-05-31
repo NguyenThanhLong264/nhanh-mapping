@@ -8,7 +8,8 @@ const CustomTextField = ({
     onBlur = () => { },
     placeholder = '',
     multiline = false,
-    minRows = 3
+    minRows = 3,
+    disabled = false
 }) => {
     const [localValue, setLocalValue] = useState(value);
 
@@ -34,6 +35,7 @@ const CustomTextField = ({
             onChange={(e) => setLocalValue(e.target.value)}
             onBlur={handleBlur}
             placeholder={placeholder}
+            disabled={disabled}
             sx={{
                 width: "100%",
                 "& .MuiOutlinedInput-root": {
