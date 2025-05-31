@@ -1,4 +1,5 @@
 import { loadConfig, replacePlaceholders, configClassify } from '../services/webhookUtils';
+import { convertDateInStringValues } from './handerCustomFields';
 
 function cleanEmptyValues(obj, exceptions = ["username", "phone", "email"]) {
   const normalizedObj = Object.fromEntries(
@@ -62,15 +63,24 @@ export async function mapToDealFormat(orderData) {
   });
 
   custom.forEach(obj => {
-    const { name, typeInput, value } = obj;
-
+    const { name, value } = obj;
     if (Array.isArray(value)) {
-      deal[name] = (value || []).map(item => ({
-        ...item,
-        value: replacePlaceholders(item.value, orderData)
-      }));
+      deal[name] = (value || []).map(item => {
+        const replaced = {
+          ...item,
+          value: replacePlaceholders(item.value, orderData)
+        };
+        if (typeof replaced.value === "string") {
+          replaced.value = replaced.value.replace(
+            /\b(\d{4})-(\d{2})-(\d{2})(?:\s+\d{2}:\d{2}:\d{2})?\b/g,
+            (_, y, m, d) => `${y}/${m}/${d}`
+          );
+        }
+        return replaced;
+      });
     }
   });
+
 
   if (
     Array.isArray(deal.order_products) &&
@@ -79,7 +89,8 @@ export async function mapToDealFormat(orderData) {
     delete deal.order_products;
   }
 
-  const cleanedDeal = cleanEmptyValues(deal);
+  const datedeal = convertDateInStringValues(deal)
+  const cleanedDeal = cleanEmptyValues(datedeal);
   console.log("Final cleaned deal", cleanedDeal);
   return cleanedDeal;
 }
