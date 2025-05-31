@@ -100,13 +100,13 @@
     "name": "value",
     "type": "int",
     "typeInput": "map",
-    "value": "couponCode"
+    "value": "calcTotalMoney"
   },
   {
     "name": "comment",
     "type": "int",
     "typeInput": "normal",
-    "value": "Note: Những mảng có thể cần dùng:\n- Tên khách hàng: {{customerName}}\n- SĐT khách hàng: {{customerMobile}}\n- Tiêu đề Deal: Tự điền (không map)\n- Nội dung ghi chú: Nhìn ví dụ này\n- Giá trị đơn hàng: calcTotalMoney = {{calcTotalMoney}}\n- Tên cửa hàng: depotName = {{depotName}}\n- Điểm tích lũy: customer_points = {{customer_points}}\n- mã voucher: couponCode = {{couponCode}}"
+    "value": "Note: Những mảng có thể cần dùng:\n- Tên khách hàng: {{customerName}}\n- SĐT khách hàng: {{customerMobile}}\n- Tiêu đề Deal: Tự điền (không map)\n- Nội dung ghi chú: Nhìn ví dụ này\n- Giá trị đơn hàng: calcTotalMoney = {{calcTotalMoney}}\n- Tên cửa hàng: depotName = {{depotName}}\n- Điểm tích lũy: customer_points = {{customer_points}}\n- mã voucher: couponCode = {{couponCode}}\n- product:\n{{products}}"
   },
   {
     "name": "comment.body",
@@ -229,7 +229,7 @@
         "name": "sku",
         "type": "string",
         "typeInput": "map",
-        "value": "id"
+        "value": "productId"
       },
       {
         "name": "is_free",
@@ -239,26 +239,26 @@
       {
         "name": "unit_price",
         "type": "float",
-        "typeInput": "map",
-        "value": "price"
+        "typeInput": "normal",
+        "value": ""
       },
       {
         "name": "quantity",
         "type": "int",
-        "typeInput": "map",
-        "value": "quantity"
+        "typeInput": "normal",
+        "value": ""
       },
       {
         "name": "discount_markup",
         "type": "float",
-        "typeInput": "map",
-        "value": "discount"
+        "typeInput": "normal",
+        "value": ""
       },
       {
         "name": "discount_value",
         "type": "float",
-        "typeInput": "map",
-        "value": "discount"
+        "typeInput": "normal",
+        "value": ""
       }
     ]
   }

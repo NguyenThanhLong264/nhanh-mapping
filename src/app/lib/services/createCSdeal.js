@@ -7,19 +7,17 @@ import { readCondition } from '../handlers/readJSON';
 export async function createCSdeal(dealData, body) {
   let token;
   if (process.env.DB_TYPE === 'mysql') {
-    token = await getConditionByName("apiKey")
-
+    token = await getConditionByName("apiKey");
   } else if (process.env.DB_TYPE === 'sqlite') {
     const condition = await readCondition();
     token = condition;
   }
 
-  const data = body.data
-  const orderId = data.orderId
-  const businessId = body.businessId
-  try {
-    // console.log("createCSdeal - Deal data:", dealData);
+  const data = body.data;
+  const orderId = data.orderId;
+  const businessId = body.businessId;
 
+  async function sendDeal(dealPayload) {
     const axiosConfig = {
       method: 'post',
       maxBodyLength: Infinity,
@@ -28,11 +26,40 @@ export async function createCSdeal(dealData, body) {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token.CareSoft_ApiToken}`,
       },
-      data: JSON.stringify({ deal: dealData }),
+      data: JSON.stringify({ deal: dealPayload }),
     };
+    return axios.request(axiosConfig);
+  }
 
-    const web2Response = await axios.request(axiosConfig);
-    // console.log('createCSdeal - Web 2 response:', JSON.stringify(web2Response.data));
+  try {
+    let web2Response;
+
+    try {
+      web2Response = await sendDeal(dealData);
+    } catch (error) {
+      const errorMsg = error.response?.data?.message || '';
+
+      // Nếu lỗi là do không tìm thấy sku -> retry không có order_products
+      if (errorMsg.includes('not found product with sku')) {
+        console.warn('Retrying without order_products due to invalid SKU');
+        const cleanedDeal = { ...dealData };
+        delete cleanedDeal.order_products;
+
+        try {
+          web2Response = await sendDeal(cleanedDeal);
+        } catch (retryError) {
+          console.error('Retry failed:', retryError.message);
+          console.error('Retry details:', retryError.response?.data);
+          return {
+            status: 500,
+            error: retryError.message,
+            details: retryError.response?.data,
+          };
+        }
+      } else {
+        throw error; // các lỗi khác vẫn ném ra
+      }
+    }
 
     const dealId = web2Response.data.deal?.id;
     const appid = token.NhanhVN_AppId;

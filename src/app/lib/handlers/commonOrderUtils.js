@@ -1,12 +1,22 @@
 import { loadConfig, replacePlaceholders, configClassify } from '../services/webhookUtils';
 
-function cleanEmptyValues(obj) {
+function cleanEmptyValues(obj, exceptions = ["username", "phone", "email"]) {
+  const normalizedObj = Object.fromEntries(
+    Object.entries(obj).map(([key, value]) => {
+      let newValue = value === null ? "" : value;
+      if (exceptions.includes(key) && (newValue === "" || newValue === undefined)) {
+        newValue = "Unknow";
+      }
+      return [key, newValue];
+    })
+  );
   return Object.fromEntries(
-    Object.entries(obj).filter(([_, value]) =>
-      value !== null && value !== undefined && value !== ""
+    Object.entries(normalizedObj).filter(
+      ([key, value]) => exceptions.includes(key) || (value !== "" && value !== undefined)
     )
   );
 }
+
 
 export async function mapToDealFormat(orderData) {
   const config = await loadConfig();
@@ -62,8 +72,15 @@ export async function mapToDealFormat(orderData) {
     }
   });
 
+  if (
+    Array.isArray(deal.order_products) &&
+    deal.order_products.some(p => p.sku === "")
+  ) {
+    delete deal.order_products;
+  }
+
   const cleanedDeal = cleanEmptyValues(deal);
-  // console.log("Final cleaned deal", cleanedDeal);
+  console.log("Final cleaned deal", cleanedDeal);
   return cleanedDeal;
 }
 
