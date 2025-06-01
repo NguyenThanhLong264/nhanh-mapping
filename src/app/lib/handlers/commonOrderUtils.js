@@ -38,11 +38,9 @@ export async function mapToDealFormat(orderData) {
     if (typeInput === "pipeline_stage") {
       const matchedStage = value.find(stage => stage.value === orderData.status);
       deal[name] = matchedStage ? matchedStage.id : "";
-      // console.log(`Pipeline stage mapping: ${orderData.status} -> ${deal[name]}`);
     } else if (typeInput === "status") {
       const matchedStatus = value.find(status => status.value === orderData.status);
       deal[name] = matchedStatus ? matchedStatus.status : "ORDER_STARTED";
-      // console.log(`Order status mapping: ${orderData.status} -> ${deal[name]}`);
     }
   });
 

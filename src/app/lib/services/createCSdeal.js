@@ -33,18 +33,14 @@ export async function createCSdeal(dealData, body) {
 
   try {
     let web2Response;
-
     try {
       web2Response = await sendDeal(dealData);
     } catch (error) {
       const errorMsg = error.response?.data?.message || '';
-
-      // Nếu lỗi là do không tìm thấy sku -> retry không có order_products
       if (errorMsg.includes('not found product with sku')) {
         console.warn('Retrying without order_products due to invalid SKU');
         const cleanedDeal = { ...dealData };
         delete cleanedDeal.order_products;
-
         try {
           web2Response = await sendDeal(cleanedDeal);
         } catch (retryError) {
@@ -57,26 +53,12 @@ export async function createCSdeal(dealData, body) {
           };
         }
       } else {
-        throw error; // các lỗi khác vẫn ném ra
+        throw error;
       }
     }
-
+    
     const dealId = web2Response.data.deal?.id;
     const appid = token.NhanhVN_AppId;
-
-    if (dealData.phone) {
-      const customerExists = await isCustomerExsit(dealData);
-      if (customerExists === true) {
-        console.log('Customer exists, updated');
-      } else if (customerExists === false) {
-        console.log('Customer does not exist');
-      } else {
-        console.error('Error checking customer:', customerExists);
-      }
-    } else {
-      console.log("There no phone:", dealData.phone);
-    }
-
     if (orderId && dealId && businessId && appid) {
       try {
         await saveOrderDealMapping(orderId.toString(), dealId.toString(), businessId.toString(), appid);
