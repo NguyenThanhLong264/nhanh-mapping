@@ -5,7 +5,6 @@ import { readCondition } from "./readJSON";
 let token;
 if (process.env.DB_TYPE === 'mysql') {
     token = await getConditionByName("apiKey")
-
 } else if (process.env.DB_TYPE === 'sqlite') {
     const condition = await readCondition();
     token = condition;
@@ -28,11 +27,12 @@ export async function isCustomerExsit(deal) {
 
         if (data.code === "ok" && data.contact) {
             const contact = data.contact;
+            console.log("Update customer with:", deal);
             await updateCustomer(deal, contact.id);
             return true;
         } else if (data.code === "errors" && data.message === "Not found user") {
-            const contact = data.contact;
-            await createCustomer(contact);
+            // const contact = data.contact;
+            // await createCustomer(contact);
             return false;
         } else {
             return {
@@ -75,7 +75,6 @@ export async function updateCustomer(contact, id) {
             data: data
         };
 
-        // console.log('Sending update request...');
         const response = await axios.request(config);
         // console.log('Update successful:', response.data);
 

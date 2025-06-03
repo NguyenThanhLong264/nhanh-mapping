@@ -3,6 +3,7 @@ import axios from 'axios';
 import { mapToDealFormatForUpdate } from '../handlers/commonOrderUtils';
 import { getConditionByName } from '../db';
 import { readCondition } from '../handlers/readJSON';
+import { isCustomerExsit } from '../handlers/customerProccessing';
 
 export async function updateDeal(data, dealId) {
     let token;
@@ -12,11 +13,8 @@ export async function updateDeal(data, dealId) {
         const condition = await readCondition();
         token = condition;
     }
-    // console.log('Updating deal with raw data:', JSON.stringify(data, null, 2));
     try {
-        const dealUpdate = await mapToDealFormatForUpdate(data); // Thêm await
-        // console.log('Deal after mapping:', JSON.stringify(dealUpdate, null, 2));
-
+        const dealUpdate = await mapToDealFormatForUpdate(data);
         const axiosConfig = {
             method: 'put',
             url: `https://api.caresoft.vn/${token.CareSoft_Domain}/api/v1/deal/${dealId}`,
@@ -26,6 +24,19 @@ export async function updateDeal(data, dealId) {
             },
             data: { deal: dealUpdate } // Bỏ JSON.stringify
         };
+
+        if (dealUpdate.phone) {
+            const customerExists = await isCustomerExsit(dealUpdate.phone)
+            if (customerExists === true) {
+                console.log('Customer exists, updated');
+            } else if (customerExists === false) {
+                console.log('Customer does not exist');
+            } else {
+                console.error('Error checking customer:', customerExists);
+            }
+        } else {
+            console.log("There no phone:", dealUpdate.phone);
+        }
 
         const res = await axios.request(axiosConfig);
         return res.data;

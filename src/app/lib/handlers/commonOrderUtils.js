@@ -6,7 +6,7 @@ function cleanEmptyValues(obj, exceptions = ["username", "phone", "email"]) {
     Object.entries(obj).map(([key, value]) => {
       let newValue = value === null ? "" : value;
       if (exceptions.includes(key) && (newValue === "" || newValue === undefined)) {
-        newValue = "Unknow";
+        newValue = "";
       }
       return [key, newValue];
     })
@@ -90,8 +90,10 @@ export async function mapToDealFormat(orderData) {
             value: replaced.value
           };
         }
+        console.log("Final :", replaced);
+
         return replaced;
-      });
+      }).filter(item => item.value !== '');
     }
   });
 

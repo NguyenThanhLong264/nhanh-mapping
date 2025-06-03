@@ -37,7 +37,22 @@ export async function createCSdeal(dealData, body) {
       web2Response = await sendDeal(dealData);
     } catch (error) {
       const errorMsg = error.response?.data?.message || '';
-      if (errorMsg.includes('not found product with sku')) {
+      if (errorMsg.includes('attributes can missing: requester_id, email, phone or username')) {
+        console.warn('Retrying with fallback phone number due to missing attributes error');
+        const fallbackDeal = { ...dealData, phone: '0987654321' };
+        try {
+          web2Response = await sendDeal(fallbackDeal);
+        } catch (retryError) {
+          console.error('Retry with fallback phone failed:', retryError.message);
+          console.error('Retry details:', retryError.response?.data);
+          return {
+            status: 500,
+            error: retryError.message,
+            details: retryError.response?.data,
+          };
+        }
+      }
+      else if (errorMsg.includes('not found product with sku')) {
         console.warn('Retrying without order_products due to invalid SKU');
         const cleanedDeal = { ...dealData };
         delete cleanedDeal.order_products;
@@ -52,11 +67,13 @@ export async function createCSdeal(dealData, body) {
             details: retryError.response?.data,
           };
         }
-      } else {
+      }
+      else {
         throw error;
       }
     }
-    
+
+
     const dealId = web2Response.data.deal?.id;
     const appid = token.NhanhVN_AppId;
     if (orderId && dealId && businessId && appid) {
@@ -68,6 +85,19 @@ export async function createCSdeal(dealData, body) {
       }
     } else {
       console.error('createCSdeal - Missing fields for mapping:', { orderId, dealId, businessId, appid });
+    }
+
+    if (dealData.phone) {
+      const customerExists = await isCustomerExsit(dealData);
+      if (customerExists === true) {
+        console.log('Customer exists, updated');
+      } else if (customerExists === false) {
+        console.log('Customer does not exist');
+      } else {
+        console.error('Error checking customer:', customerExists);
+      }
+    } else {
+      console.log("There no phone:", dealData.phone);
     }
 
     return {

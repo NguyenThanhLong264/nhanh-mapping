@@ -21,18 +21,16 @@ export async function loadConfig() {
 export function replacePlaceholders(template, data) {
     if (typeof template !== 'string') return template;
 
-    // Xử lý đặc biệt cho products
     if (template.includes('{{products}}') && data.products && Array.isArray(data.products)) {
         const productsText = data.products.map(p => {
-            return `- ID Nhanh: ${p.productId} - Tên: ${p.productName} - SL: ${p.quantity} - KL: ${p.weight}g - Discount: ${p.discount}VND  - Giá: ${p.price}VND`;
+            return `+ ID Nhanh: ${p.productId} - Tên: ${p.productName} - SL: ${p.quantity} - KL: ${p.weight}g - Discount: ${p.discount}VND  - Giá: ${p.price}VND`;
         }).join('\n');
         template = template.replace('{{products}}', productsText);
     }
 
     return template.replace(/\{\{(\w+)\}\}/g, (match, param) => {
         const value = data[param];
-        const safeValue = value !== undefined && value !== null ? value : match;
-        return safeValue;
+        return value != null ? String(value) : '';
     });
 }
 
