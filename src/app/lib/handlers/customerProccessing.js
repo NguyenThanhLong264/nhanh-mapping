@@ -27,7 +27,7 @@ export async function isCustomerExsit(deal) {
 
         if (data.code === "ok" && data.contact) {
             const contact = data.contact;
-            console.log("Update customer with:", deal);
+            // console.log("Update customer with:", deal);
             await updateCustomer(deal, contact.id);
             return true;
         } else if (data.code === "errors" && data.message === "Not found user") {
