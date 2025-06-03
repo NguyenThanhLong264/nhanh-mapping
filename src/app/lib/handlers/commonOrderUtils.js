@@ -61,8 +61,7 @@ export async function mapToDealFormat(orderData) {
   });
 
   custom.forEach(obj => {
-    console.log("customfield obj:", obj);
-
+    // console.log("customfield obj:", obj);
     const { name, value } = obj;
     if (Array.isArray(value)) {
       deal[name] = (value || []).map(item => {
@@ -90,8 +89,6 @@ export async function mapToDealFormat(orderData) {
             value: replaced.value
           };
         }
-        console.log("Final :", replaced);
-
         return replaced;
       }).filter(item => item.value !== '');
     }
