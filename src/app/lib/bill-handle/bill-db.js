@@ -22,13 +22,43 @@ export async function checkBillExists(bill_id) {
 // Tạo mới hoặc cập nhật bill_id và deal_id (upsert)
 export async function saveBillDealMapping(bill_id, deal_id) {
     try {
-        await db('bill_deal_mapping').insert({
-            bill_id: bill_id,
-            deal_id: deal_id,
-            created_at: new Date(),
-        });
+        const db = await getDb();
+        if (process.env.DB_TYPE === 'mysql') {
+            await db.execute(
+                `INSERT INTO synced_bills (bill_id, deal_id)
+                 VALUES (?, ?)
+                 ON DUPLICATE KEY UPDATE deal_id = VALUES(deal_id)`,
+                [bill_id, deal_id]
+            );
+        } else {
+            await db.run(
+                `INSERT INTO synced_bills (bill_id, deal_id)
+                 VALUES (?, ?)
+                 ON CONFLICT(bill_id) DO UPDATE SET deal_id=excluded.deal_id`,
+                [bill_id, deal_id]
+            );
+        }
         console.log(`Đã lưu mapping: Bill ${bill_id} => Deal ${deal_id}`);
     } catch (error) {
         console.error(`Lỗi khi lưu mapping cho bill ${bill_id}:`, error);
+    }
+}
+
+export async function saveSyncStatus({ sync_date, last_page }) {
+    const db = await getDb();
+    if (process.env.DB_TYPE === 'mysql') {
+        await db.execute(
+            `INSERT INTO sync_status (sync_date, last_page)
+             VALUES (?, ?)
+             ON DUPLICATE KEY UPDATE last_page = ?`,
+            [sync_date, last_page, last_page]
+        );
+    } else {
+        await db.run(
+            `INSERT INTO sync_status (sync_date, last_page)
+             VALUES (?, ?)
+             ON CONFLICT(sync_date) DO UPDATE SET last_page=excluded.last_page`,
+            [sync_date, last_page]
+        );
     }
 }

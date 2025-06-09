@@ -1,16 +1,9 @@
+// src/app/lib/handlers/customerProccessing.js
 import axios from "axios";
-import { getConditionByName } from "../db.js";
-import { readCondition } from "./readJSON.js";
-
-let token;
-if (process.env.DB_TYPE === 'mysql') {
-    token = await getConditionByName("apiKey")
-} else if (process.env.DB_TYPE === 'sqlite') {
-    const condition = await readCondition();
-    token = condition;
-}
+import { getToken } from "./getCondition.js";
 
 export async function isCustomerExsit(deal) {
+    const token = await getToken()
     const customerPhone = deal.phone ?? deal.customerMobile;
     try {
         const axiosConfig = {
@@ -27,12 +20,12 @@ export async function isCustomerExsit(deal) {
 
         if (data.code === "ok" && data.contact) {
             const contact = data.contact;
-            // console.log("Update customer with:", deal);
+            console.log("Update customer with:", deal);
             await updateCustomer(deal, contact.id);
             return true;
         } else if (data.code === "errors" && data.message === "Not found user") {
             // const contact = data.contact;
-            // await createCustomer(contact);
+            // // await createCustomer(contact);
             return false;
         } else {
             return {
@@ -54,9 +47,10 @@ export async function isCustomerExsit(deal) {
 }
 
 export async function updateCustomer(contact, id) {
+    const token = await getToken()
     try {
-        // console.log(`Updating customer with ID: ${id}`);
-        // console.log('Customer data:', contact);
+        console.log(`Updating customer with ID: ${id}`);
+        console.log('Customer data:', contact);
 
         const data = JSON.stringify({
             contact: {
@@ -94,6 +88,7 @@ export async function updateCustomer(contact, id) {
 }
 
 export async function createCustomer(contact) {
+    const token = await getToken()
     try {
         // console.log('Creating new customer');
         // console.log('Customer data:', contact);

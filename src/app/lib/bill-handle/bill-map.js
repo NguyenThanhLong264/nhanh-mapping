@@ -30,7 +30,7 @@ export async function mapBilltoDeal(data) {
 
     product.forEach(obj => {
         const { name, subFields } = obj;
-        const productList = Object.values(data.products || {}); // Chuyển từ object → array
+        const productList = Object.values(data.products || {});
 
         deal[name] = productList.map(product => {
             const mappedProduct = {};
@@ -90,7 +90,7 @@ export async function mapBilltoDeal(data) {
 
     const datedeal = convertDateInStringValues(deal)
     const cleanedDeal = cleanEmptyValues(datedeal);
-    console.log("Final cleaned bill", cleanedDeal);
+    // console.log("Final cleaned bill", cleanedDeal);
     return cleanedDeal;
 }
 

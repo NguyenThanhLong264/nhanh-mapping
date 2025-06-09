@@ -4,6 +4,7 @@ import FormData from 'form-data';
 import { getConditionByName } from '../db';
 import { readCondition } from '../handlers/readJSON';
 import { fetchCustomerInfo } from './fetchCustomerNhanhvn';
+import { throttleNhanh } from '../bill-handle/bill-nhanh';
 
 export async function fetchFullOrderData(orderId) {
     let token;
@@ -23,6 +24,8 @@ export async function fetchFullOrderData(orderId) {
         formData.append('businessId', NhanhVN_BusinessId);
         formData.append('accessToken', NhanhVN_AccessToken);
         formData.append('data', JSON.stringify({ page: 1, id: orderId.toString() }));
+
+        await throttleNhanh();
 
         const response = await axios.post('https://open.nhanh.vn/api/order/index', formData, {
             headers: formData.getHeaders(),

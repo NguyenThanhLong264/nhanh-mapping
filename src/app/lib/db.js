@@ -77,6 +77,24 @@ export async function getDb() {
                     );
                 END;
             `);
+            await dbInstance.run(`
+                CREATE TABLE IF NOT EXISTS sync_status (
+                    sync_date TEXT PRIMARY KEY, 
+                    last_page INTEGER NOT NULL
+                )
+            `);
+            await dbInstance.run(`
+                CREATE TRIGGER IF NOT EXISTS limit_sync_status_after_insert
+                AFTER INSERT ON sync_status
+                BEGIN
+                    DELETE FROM sync_status
+                    WHERE sync_date NOT IN (
+                        SELECT sync_date FROM sync_status
+                        ORDER BY sync_date DESC
+                        LIMIT 100
+                    );
+                END;
+            `)
         }
     }
     return dbInstance;

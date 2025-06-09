@@ -79,8 +79,8 @@ export async function createCSdealNoMapping(dealData) {
         }
 
         // Kiểm tra khách hàng
-        if (dealData.customerMobile) {
-            console.log("There is a mobile phone:", dealData.customerMobile);
+        if (dealData.phone) {
+            console.log("There is a mobile phone:", dealData.phone);
             const customerExists = await isCustomerExsit(dealData);
             if (customerExists === true) {
                 console.log('Customer exists, updated');
@@ -90,7 +90,7 @@ export async function createCSdealNoMapping(dealData) {
                 console.error('Error checking customer:', customerExists);
             }
         } else {
-            console.log("There no phone:", dealData.customerMobile);
+            console.log("There no phone:", dealData.phone);
         }
 
         return {
