@@ -62,3 +62,21 @@ export async function saveSyncStatus({ sync_date, last_page }) {
         );
     }
 }
+
+export async function getSyncStatus({ sync_date }) {
+    const db = await getDb();
+
+    if (process.env.DB_TYPE === 'mysql') {
+        const [rows] = await db.execute(
+            'SELECT * FROM sync_status WHERE sync_date = ? LIMIT 1',
+            [sync_date]
+        );
+        return rows.length > 0 ? rows[0] : null;
+    } else {
+        const row = await db.get(
+            'SELECT * FROM sync_status WHERE sync_date = ? LIMIT 1',
+            [sync_date]
+        );
+        return row || null;
+    }
+}

@@ -20,7 +20,7 @@ export async function isCustomerExsit(deal) {
 
         if (data.code === "ok" && data.contact) {
             const contact = data.contact;
-            console.log("Update customer with:", deal);
+            // console.log("Update customer with:", deal);
             await updateCustomer(deal, contact.id);
             return true;
         } else if (data.code === "errors" && data.message === "Not found user") {
@@ -50,7 +50,7 @@ export async function updateCustomer(contact, id) {
     const token = await getToken()
     try {
         console.log(`Updating customer with ID: ${id}`);
-        console.log('Customer data:', contact);
+        // console.log('Customer data:', contact);
 
         const data = JSON.stringify({
             contact: {

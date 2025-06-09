@@ -1,32 +1,26 @@
 // scripts/sync-bills.js
-import { loadBillConfig } from '../src/app/lib/bill-handle/bill-config.js';
-import { readCondition } from '../src/app/lib/handlers/readJSON.js';
 import { fetchNhanhBills, throttleNhanh } from '../src/app/lib/bill-handle/bill-nhanh.js';
 import { mapBilltoDeal } from '../src/app/lib/bill-handle/bill-map.js';
-import { checkBillExists, saveBillDealMapping, saveSyncStatus } from '../src/app/lib/bill-handle/bill-db.js';
+import { checkBillExists, getSyncStatus, saveBillDealMapping, saveSyncStatus } from '../src/app/lib/bill-handle/bill-db.js';
 import { createCSdealNoMapping } from '../src/app/lib/bill-handle/bill-createdeal.js';
 import { fetchCustomerInfo } from '../src/app/lib/services/fetchCustomerNhanhvn.js';
 
 async function syncBills(fromDate, toDate) {
-    const config = await loadBillConfig();
-    const condition = await readCondition();
-
     const firstPageData = await fetchNhanhBills({ fromDate, toDate, page: 1 });
     if (!firstPageData) return;
-    let totalPages = firstPageData.totalPages;
+
+    const totalPages = firstPageData.totalPages;
 
     for (let page = totalPages; page >= 1; page--) {
         try {
             if (page !== 1) {
-                await throttleNhanh(); // delay trước khi gọi API fetchNhanhBills
+                await throttleNhanh();
             }
-
             const pageData = page === 1 ? firstPageData : await fetchNhanhBills({ fromDate, toDate, page });
             if (!pageData) continue;
-
             const bills = pageData.bills;
-
             for (const billId in bills) {
+                console.log('[DEBUG] Current page:', page);
                 try {
                     const exists = await checkBillExists(billId);
                     if (exists) {
@@ -41,10 +35,8 @@ async function syncBills(fromDate, toDate) {
                             Object.assign(rawBill, customerData);
                         }
                     }
-
-                    const bill = await mapBilltoDeal(bills[billId]);
+                    const bill = await mapBilltoDeal(rawBill);
                     const response = await createCSdealNoMapping(bill);
-
                     if (response?.status === 200 && response.data?.deal?.id) {
                         const dealId = response.data.deal.id;
                         await saveBillDealMapping(billId, dealId);
@@ -55,21 +47,10 @@ async function syncBills(fromDate, toDate) {
                     console.error(`Lỗi xử lý bill ${billId}:`, e);
                 }
             }
-
-            await saveSyncStatus({
-                sync_date: fromDate,
-                last_page: page
-            });
-
         } catch (e) {
             console.error(`Lỗi xử lý trang ${page}:`, e);
-            await saveSyncStatus({
-                sync_date: fromDate,
-                last_page: page
-            });
         }
     }
-
 }
 
 function getTodayDate() {
