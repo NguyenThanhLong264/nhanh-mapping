@@ -27,8 +27,8 @@ export async function writeCondition(data) {
 
 export async function saveConfig(configArray) {
     try {
-        const configPath = path.join(process.cwd(), 'data', 'config.json'); // file config nằm cùng folder với condition.json
-        const jsonString = JSON.stringify(configArray, null, 2); // format đẹp, 2 space indent
+        const configPath = path.join(process.cwd(), 'data', 'config.json');
+        const jsonString = JSON.stringify(configArray, null, 2);
 
         await fs.writeFile(configPath, jsonString, 'utf-8');
         return { success: true };

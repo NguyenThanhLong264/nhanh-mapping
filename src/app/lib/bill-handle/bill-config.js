@@ -1,0 +1,31 @@
+import { promises as fs } from 'fs';
+import path from 'path';
+
+export async function saveBillConfig(configArray) {
+    try {
+        const configPath = path.join(process.cwd(), 'data', 'billConfig.json');
+        const jsonString = JSON.stringify(configArray, null, 2);
+
+        await fs.writeFile(configPath, jsonString, 'utf-8');
+        return { success: true };
+    } catch (error) {
+        console.error('❌ Failed to save config:', error);
+        return { success: false, error };
+    }
+}
+
+export async function loadBillConfig() {
+    if (process.env.DB_TYPE === 'mysql') {
+        return await getConditionByName("config");
+    }
+    else if (process.env.DB_TYPE === 'sqlite') {
+        const configPath = path.join(process.cwd(), 'data', 'billConfig.json');
+        try {
+            const configData = await fs.readFile(configPath, 'utf8');
+            return JSON.parse(configData);
+        } catch (error) {
+            console.log('Webhook - No config found, returning empty array');
+            return [];
+        }
+    }
+}
