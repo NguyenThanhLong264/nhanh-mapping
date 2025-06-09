@@ -1,9 +1,9 @@
 // scripts/sync-bills.js
 import { loadBillConfig } from '../src/app/lib/bill-handle/bill-config.js';
 import { readCondition } from '../src/app/lib/handlers/readJSON.js';
-import { fetchNhanhBills } from '../src/app/lib/bill-handle/bill-nhanh.js';
+import { fetchNhanhBills, throttleNhanh } from '../src/app/lib/bill-handle/bill-nhanh.js';
 import { mapBilltoDeal } from '../src/app/lib/bill-handle/bill-map.js';
-import { checkBillExists } from '../src/app/lib/bill-handle/bill-db.js';
+import { checkBillExists, saveBillDealMapping } from '../src/app/lib/bill-handle/bill-db.js';
 import { createCSdealNoMapping } from '../src/app/lib/bill-handle/bill-createdeal.js';
 
 async function syncBills(fromDate, toDate) {
@@ -15,19 +15,32 @@ async function syncBills(fromDate, toDate) {
 
     for (let page = totalPages; page >= 1; page--) {
         try {
+            if (page !== 1) {
+                await throttleNhanh();
+            }
+
             const pageData = page === 1 ? firstPageData : await fetchNhanhBills({ fromDate, toDate, page });
             if (!pageData) continue;
 
             const bills = pageData.bills;
             for (const billId in bills) {
                 try {
+                    await throttleNhanh();
                     const exists = await checkBillExists(billId);
                     if (exists) {
                         console.log(`Bill ${billId} đã tồn tại, bỏ qua.`);
                         continue;
                     }
+
                     const bill = await mapBilltoDeal(bills[billId]);
                     const response = await createCSdealNoMapping(bill);
+
+                    if (response?.status === 200 && response.data?.deal?.id) {
+                        const dealId = response.data.deal.id;
+                        await saveBillDealMapping(billId, dealId);
+                    } else {
+                        console.warn(`Không thể lưu mapping vì thiếu deal_id cho bill ${billId}`);
+                    }
                 } catch (e) {
                     console.error(`Lỗi xử lý bill ${billId}:`, e);
                 }

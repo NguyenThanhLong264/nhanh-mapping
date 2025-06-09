@@ -11,7 +11,7 @@ if (process.env.DB_TYPE === 'mysql') {
 }
 
 export async function isCustomerExsit(deal) {
-    const customerPhone = deal.phone;
+    const customerPhone = deal.phone ?? deal.customerMobile;
     try {
         const axiosConfig = {
             method: 'get',

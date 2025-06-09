@@ -5,7 +5,7 @@ import { readCondition } from '../handlers/readJSON.js';
 let lastCallTime = 0;  // thời điểm gọi hàm cuối cùng (ms)
 const minInterval = 100; // 100 ms giữa 2 lần gọi => max 10 calls/s
 
-async function throttle() {
+export async function throttleCareSoft() {
     const now = Date.now();
     const diff = now - lastCallTime;
     if (diff < minInterval) {
@@ -15,8 +15,6 @@ async function throttle() {
 }
 
 export async function createCSdealNoMapping(dealData) {
-    await throttle();  // gọi hàm throttle để giới hạn tốc độ
-
     let token;
     if (process.env.DB_TYPE === 'mysql') {
         const { getConditionByName } = await import('../db.js');
@@ -25,6 +23,7 @@ export async function createCSdealNoMapping(dealData) {
         token = await readCondition();
     }
 
+    await throttleCareSoft();
     async function sendDeal(dealPayload) {
         const axiosConfig = {
             method: 'post',
@@ -80,7 +79,8 @@ export async function createCSdealNoMapping(dealData) {
         }
 
         // Kiểm tra khách hàng
-        if (dealData.phone) {
+        if (dealData.customerMobile) {
+            console.log("There is a mobile phone:", dealData.customerMobile);
             const customerExists = await isCustomerExsit(dealData);
             if (customerExists === true) {
                 console.log('Customer exists, updated');
@@ -90,7 +90,7 @@ export async function createCSdealNoMapping(dealData) {
                 console.error('Error checking customer:', customerExists);
             }
         } else {
-            console.log("There no phone:", dealData.phone);
+            console.log("There no phone:", dealData.customerMobile);
         }
 
         return {

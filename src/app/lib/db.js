@@ -77,7 +77,6 @@ export async function getDb() {
                     );
                 END;
             `);
-
         }
     }
     return dbInstance;

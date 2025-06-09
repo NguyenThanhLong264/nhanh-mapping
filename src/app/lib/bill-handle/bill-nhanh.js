@@ -4,6 +4,18 @@ import axios from 'axios';
 import FormData from "form-data";
 import { readCondition } from "../handlers/readJSON.js";
 
+let lastNhanhCall = 0;
+const nhanhMinInterval = 350;
+
+export async function throttleNhanh() {
+    const now = Date.now();
+    const elapsed = now - lastNhanhCall;
+    if (elapsed < nhanhMinInterval) {
+        await new Promise(res => setTimeout(res, nhanhMinInterval - elapsed));
+    }
+    lastNhanhCall = Date.now();
+}
+
 export async function fetchNhanhBills({ fromDate, toDate, page = 1 }) {
     const condition = await readCondition();
 

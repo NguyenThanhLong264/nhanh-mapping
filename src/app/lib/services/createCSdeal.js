@@ -2,6 +2,7 @@ import axios from 'axios';
 import { getConditionByName, saveOrderDealMapping } from '../db.js';
 import { isCustomerExsit } from '../handlers/customerProccessing.js';
 import { readCondition } from '../handlers/readJSON.js';
+import { throttleCareSoft } from '../bill-handle/bill-createdeal.js';
 
 export async function createCSdeal(dealData, body) {
   let token;
@@ -16,6 +17,7 @@ export async function createCSdeal(dealData, body) {
   const orderId = data.orderId;
   const businessId = body.businessId;
 
+  await throttleCareSoft();
   async function sendDeal(dealPayload) {
     const axiosConfig = {
       method: 'post',

@@ -4,6 +4,7 @@ import { mapToDealFormatForUpdate } from '../handlers/commonOrderUtils';
 import { getConditionByName } from '../db';
 import { readCondition } from '../handlers/readJSON';
 import { isCustomerExsit } from '../handlers/customerProccessing';
+import { throttleCareSoft } from '../bill-handle/bill-createdeal';
 
 export async function updateDeal(data, dealId) {
     let token;
@@ -14,6 +15,7 @@ export async function updateDeal(data, dealId) {
         token = condition;
     }
     try {
+        await throttleCareSoft();
         const dealUpdate = await mapToDealFormatForUpdate(data);
         const axiosConfig = {
             method: 'put',
