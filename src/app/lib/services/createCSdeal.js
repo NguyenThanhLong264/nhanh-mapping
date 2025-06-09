@@ -1,8 +1,7 @@
 import axios from 'axios';
-import { saveOrderDealMapping } from '../db';
-import { isCustomerExsit } from '../handlers/customerProccessing';
-import { getConditionByName } from '../db';
-import { readCondition } from '../handlers/readJSON';
+import { getConditionByName, saveOrderDealMapping } from '../db.js';
+import { isCustomerExsit } from '../handlers/customerProccessing.js';
+import { readCondition } from '../handlers/readJSON.js';
 
 export async function createCSdeal(dealData, body) {
   let token;

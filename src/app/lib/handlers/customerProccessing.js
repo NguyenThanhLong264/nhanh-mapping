@@ -1,6 +1,6 @@
 import axios from "axios";
-import { getConditionByName } from "../db";
-import { readCondition } from "./readJSON";
+import { getConditionByName } from "../db.js";
+import { readCondition } from "./readJSON.js";
 
 let token;
 if (process.env.DB_TYPE === 'mysql') {

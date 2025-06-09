@@ -1,3 +1,4 @@
+// src/app/lib/db.js
 import sqlite3 from 'sqlite3';
 import { open } from 'sqlite';
 import mysql from 'mysql2/promise';
@@ -5,7 +6,7 @@ import path from 'path';
 
 let dbInstance = null;
 
-async function getDb() {
+export async function getDb() {
     if (!dbInstance) {
         if (process.env.DB_TYPE === 'mysql') {
             dbInstance = await mysql.createConnection({
@@ -53,10 +54,30 @@ async function getDb() {
                 WHERE rowid NOT IN (
                     SELECT rowid FROM order_deal_mapping
                     ORDER BY rowid DESC
-                    LIMIT 10000
+                    LIMIT 40000
                 );
                 END;
             `);
+            await dbInstance.run(`
+                CREATE TABLE IF NOT EXISTS synced_bills (
+                    bill_id TEXT PRIMARY KEY,
+                    deal_id TEXT NOT NULL
+                )
+            `);
+
+            await dbInstance.run(`
+                CREATE TRIGGER IF NOT EXISTS limit_synced_bills
+                AFTER INSERT ON synced_bills
+                BEGIN
+                    DELETE FROM synced_bills
+                    WHERE rowid NOT IN (
+                    SELECT rowid FROM synced_bills
+                    ORDER BY rowid DESC
+                    LIMIT 100000
+                    );
+                END;
+            `);
+
         }
     }
     return dbInstance;
