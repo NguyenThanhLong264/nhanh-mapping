@@ -15,7 +15,6 @@ export async function saveBillConfig(configArray) {
 }
 
 export async function loadBillConfig() {
-    // console.log('[DEBUG] DB_TYPE:', process.env.DB_TYPE);
     if (process.env.DB_TYPE === 'mysql') {
         const result = await getConditionByName("config");
         console.log('[DEBUG] getConditionByName result:', result);

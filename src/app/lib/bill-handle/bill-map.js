@@ -91,7 +91,7 @@ export async function mapBilltoDeal(data) {
 
     const datedeal = convertDateInStringValues(deal)
     const cleanedDeal = cleanEmptyValues(datedeal);
-    console.log("Final cleaned bill", cleanedDeal);
+    // console.log("Final cleaned bill", cleanedDeal);
     return cleanedDeal;
 }
 

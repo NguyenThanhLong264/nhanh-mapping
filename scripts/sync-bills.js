@@ -1,7 +1,9 @@
 // scripts/sync-bills.js
+import { join } from 'path';
+import { readFileSync, writeFileSync } from 'fs';
 import { fetchNhanhBills, throttleNhanh } from '../src/app/lib/bill-handle/bill-nhanh.js';
 import { mapBilltoDeal } from '../src/app/lib/bill-handle/bill-map.js';
-import { checkBillExists, getSyncStatus, saveBillDealMapping, saveSyncStatus } from '../src/app/lib/bill-handle/bill-db.js';
+import { checkBillExists, saveBillDealMapping } from '../src/app/lib/bill-handle/bill-db.js';
 import { createCSdealNoMapping } from '../src/app/lib/bill-handle/bill-createdeal.js';
 import { fetchCustomerInfo } from '../src/app/lib/services/fetchCustomerNhanhvn.js';
 
@@ -66,5 +68,34 @@ async function syncTodayBills() {
     await syncBills(today, today);
 }
 
-export { syncBills, syncTodayBills };
+
+async function syncByMode() {
+    const syncModePath = join(process.cwd(), 'data', 'sync-mode.json');
+    let modeConfig;
+    try {
+        modeConfig = JSON.parse(readFileSync(syncModePath, 'utf-8'));
+    } catch (err) {
+        console.warn('[SYNC MODE] Không đọc được sync-mode.json, chạy chế độ mặc định.');
+        return await syncTodayBills();
+    }
+
+    if (modeConfig.mode === 'override' && modeConfig.fromDate && modeConfig.toDate) {
+        const from = new Date(modeConfig.fromDate);
+        const to = new Date(modeConfig.toDate);
+
+        while (from <= to) {
+            const dateStr = from.toISOString().slice(0, 10);
+            console.log(`[SYNC OVERRIDE] Đang đồng bộ ngày ${dateStr}`);
+            await syncBills(dateStr, dateStr);
+            from.setDate(from.getDate() + 1);
+        }
+
+        writeFileSync(syncModePath, JSON.stringify({ mode: 'normal' }, null, 2));
+        console.log('[SYNC OVERRIDE] Hoàn tất. Đã chuyển về chế độ "normal".');
+    } else {
+        await syncTodayBills();
+    }
+}
+
+export { syncBills, syncTodayBills, syncByMode };
 

@@ -12,6 +12,7 @@ import defaultConfig from "@/app/constants/defaultConfig.json";
 import { GUIDE_TEXT } from "@/app/constants/guideText";
 import { webhookFields } from "@/app/constants/nhanhWebhookFields"
 import SaveButton from "@/components/Button/savebutton";
+import NavigateButton from "@/components/Button/navigatebutton";
 
 export default function GGsheetMapPage() {
     const [rowsConfig, setRowsConfig] = useState([]);
@@ -114,6 +115,7 @@ export default function GGsheetMapPage() {
             <CleanButton text="Default config" storageName={"config"} value={defaultConfig} />
             <SaveButton onClick={handleSave} />
             <GuideButton tooltipText={GUIDE_TEXT} />
+            <NavigateButton text={"To bill config"} href={"/bill-form"} sx={{ position: 'absolute', right: 20, top: 125 }} />
 
             <Box sx={{ p: 3, maxWidth: "1200px", mx: "auto", bgcolor: "#F5F6FA" }}>
                 <NormalTable

@@ -1,8 +1,8 @@
-import { loadBillConfig } from '../src/app/lib/bill-handle/bill-config.js';
+import { syncByMode } from '../../../scripts/sync-bills.js';
 
 async function test() {
     try {
-        const config = await loadBillConfig();
+        const config = await syncByMode();
         console.log('[TEST] Config loaded:', config);
     } catch (error) {
         console.error('[TEST] Error loading config:', error);

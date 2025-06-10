@@ -3,25 +3,18 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import cron from 'node-cron';
-import { syncTodayBills } from './scripts/sync-bills.js';
+import { syncByMode } from './scripts/sync-bills.js';
+import { msToNextRunByType, nextSyncDate } from './src/app/lib/cron-ultils/calcTime.js';
 
 let isRunning = false;
+const INTERVAL_MINUTES = 2;
+const msType = 'interval' // fixed - interval
+const CRON_INTERVAL_MS = INTERVAL_MINUTES * 60 * 1000;
+const msWait = msToNextRunByType(msType, INTERVAL_MINUTES);
+const nextRunAt = nextSyncDate(msType, INTERVAL_MINUTES);
 
 console.log('[CRON] Scheduler khởi động...');
-
-function msToNextRun() {
-    const now = new Date();
-    const nextRun = new Date(now);
-    if (now.getMinutes() < 30) {
-        nextRun.setMinutes(30, 0, 0);
-    } else {
-        nextRun.setHours(now.getHours() + 1);
-        nextRun.setMinutes(30, 0, 0);
-    }
-    return nextRun - now;
-}
-
-const msWait = msToNextRun();
+console.log(`[CRON] Lần chạy tiếp theo vào lúc: ${nextRunAt.toLocaleString('vi-VN')}`);
 
 function countdownTimer(ms) {
     let remaining = ms;
@@ -41,9 +34,7 @@ function countdownTimer(ms) {
 
 countdownTimer(msWait);
 
-const CRON_INTERVAL_MS = 2 * 60 * 1000;
-
-cron.schedule('*30 * * * *', async () => {
+cron.schedule('*/2 * * * *', async () => {
     if (isRunning) {
         console.log('[CRON] Tiến trình trước vẫn đang chạy, bỏ qua lần này.');
         return;
@@ -54,7 +45,7 @@ cron.schedule('*30 * * * *', async () => {
     console.log(`[CRON] Bắt đầu đồng bộ lúc ${startTime.toISOString()}`);
 
     try {
-        await syncTodayBills();
+        await syncByMode();
         console.log(`[CRON] Hoàn tất đồng bộ lúc ${new Date().toISOString()}`);
     } catch (err) {
         console.error('[CRON ERROR]', err);
@@ -65,9 +56,8 @@ cron.schedule('*30 * * * *', async () => {
         const elapsed = endTime - startTime;
         const waitMs = CRON_INTERVAL_MS - elapsed;
         const safeWaitMs = waitMs > 0 ? waitMs : 0;
-        const waitMin = Math.floor(safeWaitMs / 60000);
-        const waitSec = Math.floor((safeWaitMs % 60000) / 1000);
 
-        console.log(`[CRON] Tiếp theo đồng bộ sau ${waitMin} phút ${waitSec} giây.`);
+        console.log(`[CRON] Lần chạy tiếp theo vào lúc: ${new Date(Date.now() + safeWaitMs).toLocaleString('vi-VN')}`);
+        countdownTimer(safeWaitMs);
     }
 });
