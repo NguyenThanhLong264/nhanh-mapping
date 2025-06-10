@@ -63,26 +63,34 @@ function getTodayDate() {
     return new Date().toISOString().slice(0, 10);
 }
 
-function getYesterdayDate() {
-    const d = new Date();
-    d.setDate(d.getDate() - 1);
-    return d.toISOString().slice(0, 10);
-}
-
 async function syncTodayBills() {
     const now = new Date();
     const hours = now.getHours();
     const minutes = now.getMinutes();
 
-    let targetDate = getTodayDate();
     if (hours === 0 || (hours === 1 && minutes <= 45)) {
-        targetDate = getYesterdayDate();
-        console.log(`[SYNC] Trong khung giờ 0h - 1h45, đồng bộ ngày hôm trước: ${targetDate}`);
-    } else {
-        console.log(`[SYNC] Đồng bộ ngày hôm nay: ${targetDate}`);
-    }
+        // Nếu trong khung giờ 0h - 1h45, sync từ 3 ngày trước đến hôm qua
+        const targetDates = [];
+        for (let i = 3; i >= 1; i--) {
+            const d = new Date();
+            d.setDate(d.getDate() - i);
+            targetDates.push(d.toISOString().slice(0, 10));
+        }
 
-    await syncBills(targetDate, targetDate);
+        console.log(`[SYNC] Trong khung giờ 0h - 1h45, đồng bộ 3 ngày gần nhất: ${targetDates.join(', ')}`);
+
+        for (const date of targetDates) {
+            try {
+                await syncBills(date, date);
+            } catch (err) {
+                console.error(`[SYNC] Lỗi khi đồng bộ ngày ${date}:`, err);
+            }
+        }
+    } else {
+        const targetDate = getTodayDate();
+        console.log(`[SYNC] Đồng bộ ngày hôm nay: ${targetDate}`);
+        await syncBills(targetDate, targetDate);
+    }
 }
 
 
