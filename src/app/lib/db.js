@@ -54,7 +54,7 @@ export async function getDb() {
                 WHERE rowid NOT IN (
                     SELECT rowid FROM order_deal_mapping
                     ORDER BY rowid DESC
-                    LIMIT 40000
+                    LIMIT 70000
                 );
                 END;
             `);
@@ -73,7 +73,7 @@ export async function getDb() {
                     WHERE rowid NOT IN (
                     SELECT rowid FROM synced_bills
                     ORDER BY rowid DESC
-                    LIMIT 100000
+                    LIMIT 250000
                     );
                 END;
             `);

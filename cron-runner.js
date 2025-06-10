@@ -3,8 +3,13 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import cron from 'node-cron';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 import { syncByMode } from './scripts/sync-bills.js';
 import { msToNextRunByType, nextSyncDate } from './src/app/lib/cron-ultils/calcTime.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 let isRunning = false;
 const INTERVAL_MINUTES = 20;
@@ -34,7 +39,7 @@ function countdownTimer(ms) {
 
 countdownTimer(msWait);
 
-cron.schedule('*/2 * * * *', async () => {
+cron.schedule('*/20 * * * *', async () => {
     if (isRunning) {
         console.log('[CRON] Tiến trình trước vẫn đang chạy, bỏ qua lần này.');
         return;
