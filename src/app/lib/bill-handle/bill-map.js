@@ -67,9 +67,10 @@ export async function mapBilltoDeal(data) {
                         const small = replacePlaceholders(opt.smallvalue || '', data);
                         return small === actualValue;
                     });
-                    if (matchedOption) {
-                        replaced.value = matchedOption.optionId ?? matchedOption.option;
+                    if (!matchedOption) {
+                        return { id: item.id, value: '' };
                     }
+                    replaced.value = matchedOption.optionId ?? matchedOption.option;
                     return {
                         id: item.id,
                         value: replaced.value
@@ -90,7 +91,7 @@ export async function mapBilltoDeal(data) {
 
     const datedeal = convertDateInStringValues(deal)
     const cleanedDeal = cleanEmptyValues(datedeal);
-    // console.log("Final cleaned bill", cleanedDeal);
+    console.log("Final cleaned bill", cleanedDeal);
     return cleanedDeal;
 }
 

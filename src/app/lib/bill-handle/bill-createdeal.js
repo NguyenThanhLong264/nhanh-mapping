@@ -93,6 +93,8 @@ export async function createCSdealNoMapping(dealData) {
             console.log("There no phone:", dealData.phone);
         }
 
+
+        console.log('✅ Deal created successfully:', web2Response.data?.deal?.id || web2Response.data);
         return {
             status: 200,
             data: web2Response.data,

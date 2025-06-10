@@ -29,6 +29,10 @@ async function syncBills(fromDate, toDate) {
                     }
 
                     const rawBill = bills[billId];
+                    if (rawBill.orderId && rawBill.orderId !== "") {
+                        console.log(`Bill ${billId} có orderId (${rawBill.orderId}), bỏ qua.`);
+                        continue;
+                    }
                     if (rawBill.customerId && rawBill.customerId !== "") {
                         const customerData = await fetchCustomerInfo(rawBill.customerId);
                         if (customerData) {

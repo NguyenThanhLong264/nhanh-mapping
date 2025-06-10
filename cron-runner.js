@@ -11,28 +11,21 @@ console.log('[CRON] Scheduler khởi động...');
 
 function msToNextRun() {
     const now = new Date();
-    const minutes = now.getMinutes();
-    const seconds = now.getSeconds();
-    const milliseconds = now.getMilliseconds();
-    const nextRunMinute = Math.ceil((minutes + 1) / 2) * 2;
-
-    let nextRun = new Date(now);
-    if (nextRunMinute < 60) {
-        nextRun.setMinutes(nextRunMinute, 0, 0);
+    const nextRun = new Date(now);
+    if (now.getMinutes() < 30) {
+        nextRun.setMinutes(30, 0, 0);
     } else {
-        nextRun.setHours(now.getHours() + 1, 0, 0, 0);
+        nextRun.setHours(now.getHours() + 1);
+        nextRun.setMinutes(30, 0, 0);
     }
-
-    return nextRun - now; // ms đến lần chạy tiếp theo
+    return nextRun - now;
 }
 
 const msWait = msToNextRun();
-const waitMin = Math.floor(msWait / 60000);
-const waitSec = Math.floor((msWait % 60000) / 1000);
 
 function countdownTimer(ms) {
     let remaining = ms;
-    const interval = 1000; // 1 giây
+    const interval = 1000;
 
     const timerId = setInterval(() => {
         if (remaining <= 0) {
@@ -50,7 +43,7 @@ countdownTimer(msWait);
 
 const CRON_INTERVAL_MS = 2 * 60 * 1000;
 
-cron.schedule('*/2 * * * *', async () => {
+cron.schedule('*30 * * * *', async () => {
     if (isRunning) {
         console.log('[CRON] Tiến trình trước vẫn đang chạy, bỏ qua lần này.');
         return;
@@ -69,7 +62,7 @@ cron.schedule('*/2 * * * *', async () => {
         isRunning = false;
 
         const endTime = new Date();
-        const elapsed = endTime - startTime; // ms
+        const elapsed = endTime - startTime;
         const waitMs = CRON_INTERVAL_MS - elapsed;
         const safeWaitMs = waitMs > 0 ? waitMs : 0;
         const waitMin = Math.floor(safeWaitMs / 60000);
