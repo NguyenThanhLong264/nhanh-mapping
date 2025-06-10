@@ -44,3 +44,5 @@ next-env.d.ts
 
 *.stackdump
 *.db*
+
+.\data\condition.json
