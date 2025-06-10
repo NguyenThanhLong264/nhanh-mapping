@@ -12,7 +12,7 @@ export async function GET() {
         const fileContent = await fs.readFile(filePath, 'utf-8');
         const data = JSON.parse(fileContent);
         const mode = data.mode
-        const { typeMode = 'interval', minute = 2 } = data;
+        const { typeMode = 'interval', minute = 20 } = data;
         const nextRunAt = nextSyncDate(typeMode, minute);
 
         return NextResponse.json({

@@ -7,7 +7,7 @@ import { syncByMode } from './scripts/sync-bills.js';
 import { msToNextRunByType, nextSyncDate } from './src/app/lib/cron-ultils/calcTime.js';
 
 let isRunning = false;
-const INTERVAL_MINUTES = 2;
+const INTERVAL_MINUTES = 20;
 const msType = 'interval' // fixed - interval
 const CRON_INTERVAL_MS = INTERVAL_MINUTES * 60 * 1000;
 const msWait = msToNextRunByType(msType, INTERVAL_MINUTES);
