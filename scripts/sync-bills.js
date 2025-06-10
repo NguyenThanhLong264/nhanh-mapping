@@ -63,9 +63,26 @@ function getTodayDate() {
     return new Date().toISOString().slice(0, 10);
 }
 
+function getYesterdayDate() {
+    const d = new Date();
+    d.setDate(d.getDate() - 1);
+    return d.toISOString().slice(0, 10);
+}
+
 async function syncTodayBills() {
-    const today = getTodayDate();
-    await syncBills(today, today);
+    const now = new Date();
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+
+    let targetDate = getTodayDate();
+    if (hours === 0 || (hours === 1 && minutes <= 45)) {
+        targetDate = getYesterdayDate();
+        console.log(`[SYNC] Trong khung giờ 0h - 1h45, đồng bộ ngày hôm trước: ${targetDate}`);
+    } else {
+        console.log(`[SYNC] Đồng bộ ngày hôm nay: ${targetDate}`);
+    }
+
+    await syncBills(targetDate, targetDate);
 }
 
 
