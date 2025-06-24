@@ -24,13 +24,18 @@ async function syncBills(fromDate, toDate) {
             for (const billId in bills) {
                 console.log('[DEBUG] Current page:', page);
                 try {
+                    const rawBill = bills[billId];
+                    if (rawBill.type !== "2" || rawBill.mode !== "2") {
+                        console.log(`Bill ${billId} bị bỏ qua do không phải type=2 & mode=2 (type=${rawBill.type}, mode=${rawBill.mode})`);
+                        continue;
+                    }
+                    
                     const exists = await checkBillExists(billId);
                     if (exists) {
                         console.log(`Bill ${billId} đã tồn tại, bỏ qua.`);
                         continue;
                     }
 
-                    const rawBill = bills[billId];
                     if (rawBill.orderId && rawBill.orderId !== "") {
                         console.log(`Bill ${billId} có orderId (${rawBill.orderId}), bỏ qua.`);
                         continue;
@@ -69,7 +74,6 @@ async function syncTodayBills() {
     const minutes = now.getMinutes();
 
     if (hours === 0 || (hours === 1 && minutes <= 45)) {
-        // Nếu trong khung giờ 0h - 1h45, sync từ 3 ngày trước đến hôm qua
         const targetDates = [];
         for (let i = 3; i >= 1; i--) {
             const d = new Date();
