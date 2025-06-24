@@ -39,7 +39,7 @@ function countdownTimer(ms) {
 
 countdownTimer(msWait);
 
-cron.schedule('*/20 * * * *', async () => {
+cron.schedule(`*/${INTERVAL_MINUTES} * * * *`, async () => {
     if (isRunning) {
         console.log('[CRON] Tiến trình trước vẫn đang chạy, bỏ qua lần này.');
         return;
